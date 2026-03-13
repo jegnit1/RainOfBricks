@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dijvwd48iu6sk"]
+
+[ext_resource type="Script" uid="uid://bjjuqocvmwrvt" path="res://scripts/entities/player.gd" id="1_ucweq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08t41"]
+size = Vector2(32, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ie0h"]
+size = Vector2(48, 32)
+
+[node name="Player" type="CharacterBody2D" unique_id=73003246]
+collision_layer = 2
+collision_mask = 21
+script = ExtResource("1_ucweq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1907029428]
+shape = SubResource("RectangleShape2D_08t41")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1558640755]
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = 32.0
+color = Color(0.1674751, 0.48703694, 0.9817503, 1)
+
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=287144985]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1231033161]
+position = Vector2(40, 0)
+shape = SubResource("RectangleShape2D_1ie0h")
