@@ -11,6 +11,10 @@ var is_game_over: bool = false
 
 func _ready():
 	print("GameManager 초기화 완료")
+	await get_tree().create_timer(2.0).timeout
+	add_weight(60.0)  # 2초 후 무게 60 추가 테스트
+	await get_tree().create_timer(2.0).timeout
+	add_weight(50.0)  # 2초 후 무게 50 추가 → 게임오버
 
 func add_weight(amount: float):
 	if is_game_over:

@@ -19,9 +19,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1945863955]
 shape = SubResource("RectangleShape2D_07slu")
 
-[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=2001717211]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Polygon2D" type="Polygon2D" parent="Floor" unique_id=1800445601]
 
 [node name="WallLeft" type="StaticBody2D" parent="." unique_id=616403129]
 unique_name_in_owner = true
@@ -31,9 +29,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft" unique_id=1131703449]
 shape = SubResource("RectangleShape2D_3fewy")
 
-[node name="ColorRect" type="ColorRect" parent="WallLeft/CollisionShape2D" unique_id=757773826]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Polygon2D" type="Polygon2D" parent="WallLeft" unique_id=753375317]
 
 [node name="WallRight" type="StaticBody2D" parent="." unique_id=1440378009]
 unique_name_in_owner = true
@@ -43,6 +39,4 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight" unique_id=756196674]
 shape = SubResource("RectangleShape2D_fodlk")
 
-[node name="ColorRect" type="ColorRect" parent="WallRight" unique_id=857979771]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Polygon2D" type="Polygon2D" parent="WallRight" unique_id=24757437]

@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://b8m2x04g4kxm4"]
+
+[ext_resource type="Script" uid="uid://djjls28e2ua4e" path="res://scripts/ui/hud.gd" id="1_0mwgc"]
+
+[node name="HUD" type="CanvasLayer" unique_id=802405077]
+script = ExtResource("1_0mwgc")
+
+[node name="UIRoot" type="Control" parent="." unique_id=35295871]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WeightBar" type="ProgressBar" parent="UIRoot" unique_id=180084373]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 470.0
+offset_right = 770.0
+offset_bottom = 30.0
+grow_horizontal = 2
+
+[node name="WeightLabel" type="Label" parent="UIRoot" unique_id=526770266]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 470.0
+offset_top = 55.0
+offset_right = 770.0
+offset_bottom = 85.0
+grow_horizontal = 2
+text = "0 / 100"
+horizontal_alignment = 1
+
+[node name="GameOverPanel" type="Panel" parent="UIRoot" unique_id=1306782087]
+visible = false
+modulate = Color(0, 0, 0, 0.7)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="UIRoot/GameOverPanel" unique_id=196143528]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.34088802, 0.3259176, 1)
+theme_override_font_sizes/font_size = 72
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1

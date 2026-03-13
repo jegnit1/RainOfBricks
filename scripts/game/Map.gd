@@ -28,6 +28,14 @@ func _build_map():
 	_setup_wall_left()
 	_setup_wall_right()
 
+func _make_rect_polygon(width: float, height: float) -> PackedVector2Array:
+	return PackedVector2Array([
+		Vector2(-width / 2.0, -height / 2.0),
+		Vector2( width / 2.0, -height / 2.0),
+		Vector2( width / 2.0,  height / 2.0),
+		Vector2(-width / 2.0,  height / 2.0)
+	])
+
 func _setup_floor():
 	floor_body.position = Vector2(map_width / 2.0, map_height - WALL_THICKNESS / 2.0)
 
@@ -35,9 +43,9 @@ func _setup_floor():
 	shape.size = Vector2(map_width, WALL_THICKNESS)
 	$Floor/CollisionShape2D.shape = shape
 
-	var rect = $Floor/ColorRect
-	rect.size = Vector2(map_width, WALL_THICKNESS)
-	rect.position = Vector2(-map_width / 2.0, -WALL_THICKNESS / 2.0)
+	var poly = $Floor/Polygon2D
+	poly.polygon = _make_rect_polygon(map_width, WALL_THICKNESS)
+	poly.color = Color(0.4, 0.4, 0.4)
 
 func _setup_wall_left():
 	wall_left.position = Vector2(WALL_THICKNESS / 2.0, map_height / 2.0)
@@ -46,9 +54,9 @@ func _setup_wall_left():
 	shape.size = Vector2(WALL_THICKNESS, map_height)
 	$WallLeft/CollisionShape2D.shape = shape
 
-	var rect = $WallLeft/ColorRect
-	rect.size = Vector2(WALL_THICKNESS, map_height)
-	rect.position = Vector2(-WALL_THICKNESS / 2.0, -map_height / 2.0)
+	var poly = $WallLeft/Polygon2D
+	poly.polygon = _make_rect_polygon(WALL_THICKNESS, map_height)
+	poly.color = Color(0.4, 0.4, 0.4)
 
 func _setup_wall_right():
 	wall_right.position = Vector2(map_width - WALL_THICKNESS / 2.0, map_height / 2.0)
@@ -57,9 +65,9 @@ func _setup_wall_right():
 	shape.size = Vector2(WALL_THICKNESS, map_height)
 	$WallRight/CollisionShape2D.shape = shape
 
-	var rect = $WallRight/ColorRect
-	rect.size = Vector2(WALL_THICKNESS, map_height)
-	rect.position = Vector2(-WALL_THICKNESS / 2.0, -map_height / 2.0)
+	var poly = $WallRight/Polygon2D
+	poly.polygon = _make_rect_polygon(WALL_THICKNESS, map_height)
+	poly.color = Color(0.4, 0.4, 0.4)
 
 func get_spawn_area() -> Dictionary:
 	return {
