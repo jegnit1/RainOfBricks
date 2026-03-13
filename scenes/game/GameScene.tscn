@@ -1,18 +1,11 @@
 [gd_scene format=3 uid="uid://bd31hi35prn6j"]
 
-[ext_resource type="Script" uid="uid://cllnepown7ukq" path="res://scripts/game/GameManager.gd" id="1_2stm1"]
 [ext_resource type="PackedScene" uid="uid://dijvwd48iu6sk" path="res://scenes/entities/player.tscn" id="2_dsxmn"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ldxrm"]
+[ext_resource type="PackedScene" uid="uid://b61fcpaprhim7" path="res://scenes/game/map.tscn" id="2_ldxrm"]
 
 [node name="GameScene" type="Node2D" unique_id=814715480]
-script = ExtResource("1_2stm1")
+
+[node name="Map" parent="." unique_id=372877564 instance=ExtResource("2_ldxrm")]
 
 [node name="Player" parent="." unique_id=73003246 instance=ExtResource("2_dsxmn")]
-position = Vector2(640, 360)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2085996116]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=11681790]
-shape = SubResource("WorldBoundaryShape2D_ldxrm")
+position = Vector2(640, 620)
