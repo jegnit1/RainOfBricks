@@ -3,77 +3,93 @@ extends Node2D
 
 @onready var map: Node2D = $Map
 
-# 진동 관련
 var shake_intensity: float = 0.0
-var shake_timer: float = 0.0
+var shake_active: bool = false
 var original_position: Vector2
 
-# 균열 이펙트 (Polygon2D로 표현)
 var crack_polygons: Array = []
 
 func _ready():
 	original_position = position
 	GameManager.weight_stage_changed.connect(_on_weight_stage_changed)
-	GameManager.game_over_started.connect(_on_game_over_started)  # 변경
-	
-func _on_game_over_started():
-	shake_intensity = 0.0
-	position = original_position
-	_play_floor_collapse()
+	GameManager.game_over_started.connect(_on_game_over_started)
 
 func _process(delta: float):
-	_handle_shake(delta)
+	_handle_shake()
 
-func _handle_shake(delta: float):
-	if shake_intensity <= 0:
+func _handle_shake():
+	if not shake_active:
 		return
-
-	shake_timer -= delta
-
-	# 랜덤 방향으로 진동
-	var offset = Vector2(
+	position = original_position + Vector2(
 		randf_range(-shake_intensity, shake_intensity),
 		randf_range(-shake_intensity, shake_intensity)
 	)
-	position = original_position + offset
 
-	if shake_timer <= 0:
-		shake_timer = 0.05  # 진동 갱신 주기
-	
+func _stop_shake():
+	shake_active = false
+	shake_intensity = 0.0
+	position = original_position
+
 func _on_weight_stage_changed(stage: String):
 	match stage:
 		"normal":
-			shake_intensity = 0.0
-			position = original_position
+			_stop_shake()
 			_clear_cracks()
 		"warning":
-			shake_intensity = 2.0   # 약한 진동
-			shake_timer = 0.05
+			shake_intensity = 1.0   # 약하게
+			shake_active = true
 		"danger":
-			shake_intensity = 5.0   # 강한 진동
-			shake_timer = 0.05
+			shake_intensity = 2.5   # 중간
+			shake_active = true
 			_add_cracks()
 
-func _on_game_over():
-	shake_intensity = 0.0
-	position = original_position
+func _on_game_over_started():
+	_stop_shake()
+	_clear_cracks()
 	_play_floor_collapse()
 
-# 균열 이펙트 생성
+func _play_floor_collapse():
+	# 바닥 노드만 가져옴
+	var floor_node = $Map/Floor
+
+	var tween = create_tween()
+
+	# 1단계: 바닥만 강하게 진동 (0.4초)
+	tween.tween_method(
+		func(t: float):
+			floor_node.position += Vector2(
+				randf_range(-8.0, 8.0),
+				randf_range(-4.0, 4.0)
+			),
+		0.0, 1.0, 0.4
+	)
+
+	# 2단계: 바닥이 화면 아래로 떨어짐 (0.5초)
+	tween.tween_property(
+		floor_node, "position",
+		floor_node.position + Vector2(0, 300),
+		0.5
+	).set_ease(Tween.EASE_IN)
+
+	# 3단계: 연출 완료 → 게임오버 패널
+	tween.tween_callback(func():
+		GameManager.finish_game_over()
+	)
+
 func _add_cracks():
 	_clear_cracks()
-	for i in range(5):  # 균열 5개 랜덤 생성
+	for i in range(5):
 		var crack = Polygon2D.new()
 		var x = randf_range(100, 1180)
-		var y = randf_range(500, 680)
+		var y = randf_range(580, 670)
 		crack.polygon = PackedVector2Array([
 			Vector2(x,      y),
-			Vector2(x + 3,  y + randf_range(20, 60)),
+			Vector2(x + 3,  y + randf_range(20, 50)),
 			Vector2(x + 6,  y + randf_range(10, 30)),
-			Vector2(x + 10, y + randf_range(30, 80)),
-			Vector2(x + 7,  y + randf_range(30, 80)),
+			Vector2(x + 10, y + randf_range(30, 70)),
+			Vector2(x + 7,  y + randf_range(30, 70)),
 			Vector2(x + 3,  y + randf_range(10, 30)),
-			Vector2(x - 1,  y + randf_range(20, 60)),
+			Vector2(x - 1,  y + randf_range(20, 50)),
 		])
 		crack.color = Color(0.1, 0.1, 0.1, 0.8)
 		crack.z_index = 10
@@ -84,25 +100,3 @@ func _clear_cracks():
 	for crack in crack_polygons:
 		crack.queue_free()
 	crack_polygons.clear()
-
-# 바닥 붕괴 연출
-func _play_floor_collapse():
-	_clear_cracks()
-	var tween = create_tween()
-	# 강한 진동 0.3초
-	tween.tween_method(_shake_strong, 0.0, 1.0, 0.3)
-	# 화면 아래로 꺼짐 0.5초
-	tween.tween_property(self, "position", original_position + Vector2(0, 400), 0.5)\
-		.set_ease(Tween.EASE_IN)
-	# 연출 완료 후 게임오버 패널 표시
-	tween.tween_callback(func():
-		position = original_position
-		GameManager.finish_game_over()
-	)
-
-func _shake_strong(t: float):
-	var intensity = 12.0
-	position = original_position + Vector2(
-		randf_range(-intensity, intensity),
-		randf_range(-intensity, intensity)
-	)

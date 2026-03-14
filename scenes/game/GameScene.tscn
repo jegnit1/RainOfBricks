@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bd31hi35prn6j"]
 
+[ext_resource type="Script" uid="uid://b4i7fhbmaxuss" path="res://scripts/game/GameScene.gd" id="1_b1len"]
 [ext_resource type="PackedScene" uid="uid://dijvwd48iu6sk" path="res://scenes/entities/player.tscn" id="2_dsxmn"]
 [ext_resource type="PackedScene" uid="uid://b61fcpaprhim7" path="res://scenes/game/map.tscn" id="2_ldxrm"]
 [ext_resource type="PackedScene" uid="uid://b8m2x04g4kxm4" path="res://scenes/ui/hud.tscn" id="3_ldxrm"]
@@ -7,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://lsa5oudexgpx" path="res://scenes/entities/brick.tscn" id="5_gs0nk"]
 
 [node name="GameScene" type="Node2D" unique_id=814715480]
+script = ExtResource("1_b1len")
 
 [node name="Map" parent="." unique_id=372877564 instance=ExtResource("2_ldxrm")]
 
