@@ -28,5 +28,7 @@ collision_layer = 0
 collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1231033161]
-position = Vector2(40, 0)
 shape = SubResource("RectangleShape2D_1ie0h")
+
+[node name="AttackEffect" type="Polygon2D" parent="AttackHitbox" unique_id=220057081]
+visible = false

@@ -11,7 +11,7 @@
 [node name="Map" type="Node2D" unique_id=372877564]
 script = ExtResource("1_3fewy")
 
-[node name="Floor" type="StaticBody2D" parent="." unique_id=1360279086]
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1360279086 groups=["ground"]]
 unique_name_in_owner = true
 collision_layer = 17
 collision_mask = 0
@@ -21,7 +21,7 @@ shape = SubResource("RectangleShape2D_07slu")
 
 [node name="Polygon2D" type="Polygon2D" parent="Floor" unique_id=1800445601]
 
-[node name="WallLeft" type="StaticBody2D" parent="." unique_id=616403129]
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=616403129 groups=["ground"]]
 unique_name_in_owner = true
 collision_layer = 17
 collision_mask = 0
@@ -31,7 +31,7 @@ shape = SubResource("RectangleShape2D_3fewy")
 
 [node name="Polygon2D" type="Polygon2D" parent="WallLeft" unique_id=753375317]
 
-[node name="WallRight" type="StaticBody2D" parent="." unique_id=1440378009]
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=1440378009 groups=["ground"]]
 unique_name_in_owner = true
 collision_layer = 17
 collision_mask = 0
