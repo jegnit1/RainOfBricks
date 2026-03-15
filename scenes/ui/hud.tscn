@@ -110,4 +110,13 @@ offset_top = 20.0
 offset_right = 340.0
 offset_bottom = 50.0
 
+[node name="OxygenBar" type="ProgressBar" parent="UIRoot" unique_id=663380756]
+modulate = Color(0.3, 0.8, 1, 1)
+layout_mode = 1
+anchors_preset = -1
+offset_left = 40.0
+offset_top = 55.0
+offset_right = 340.0
+offset_bottom = 75.0
+
 [connection signal="pressed" from="UIRoot/GameOverPanel/RestartButton" to="." method="_on_restart_button_pressed"]

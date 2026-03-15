@@ -5,6 +5,9 @@ const MOVE_SPEED: float = 200.0
 const JUMP_VELOCITY: float = -400.0
 const GRAVITY: float = 980.0
 
+var dig_timer: float = 0.0
+var is_digging: bool = false
+
 # 무기 스탯 (무기 아이템 장착 시 교체 예정)
 @export var weapon_reach: float = 48.0
 @export var weapon_width: float = 32.0
@@ -15,6 +18,9 @@ const GRAVITY: float = 980.0
 @export var dig_speed: float = 1.0
 @export var luck: int = 0
 @export var interest_rate: float = 0.0
+@export var dig_power: int = 20       # 채굴력 (삽 장비로 증가 예정)
+@export var dig_cooldown: float = 0.4 # 채굴 쿨타임 (채굴속도 스탯으로 감소)
+
 
 @onready var level_up_panel = get_node("/root/GameScene/LevelUpPanel")
 
@@ -96,12 +102,16 @@ func _physics_process(delta: float):
 		return
 	if invincible_timer > 0:
 		invincible_timer -= delta
+	if dig_timer > 0:
+		dig_timer -= delta
 
 	_apply_gravity(delta)
 	_handle_movement()
 	_handle_jump()
 	_update_aim()
 	_handle_attack(delta)
+	_handle_dig(delta)      # 추가
+	_handle_oxygen(delta)   # 추가
 	_handle_effect(delta)
 	move_and_slide()
 
@@ -158,3 +168,51 @@ func equip_weapon(reach: float, width: float, damage: int, attack_speed: float):
 	weapon_damage = damage
 	weapon_attack_speed = attack_speed
 	_setup_weapon(reach, width)
+	
+func _handle_dig(delta: float):
+	if Input.is_action_pressed("dig") and dig_timer <= 0:
+		dig_timer = dig_cooldown / dig_speed  # dig_speed 스탯 반영
+		_do_dig()
+
+func _do_dig():
+	var mouse_pos = get_global_mouse_position()
+	var dir = sign(mouse_pos.x - global_position.x)
+
+	# 마우스 위치를 그대로 dig 위치로 사용
+	# 단, X축은 플레이어 기준 방향으로 제한
+	var dig_pos = Vector2(
+		mouse_pos.x,   # 마우스 X 위치 그대로
+		mouse_pos.y    # 마우스 Y 위치 그대로
+	)
+
+	var map = get_node("/root/GameScene/Map")
+	if map:
+		map.dig_block_at(dig_pos, dig_power)
+		
+# 산소 시스템
+const MAX_OXYGEN: float = 100.0
+var current_oxygen: float = 100.0
+const OXYGEN_DRAIN: float = 15.0
+const OXYGEN_REGEN: float = 30.0
+const OXYGEN_DAMAGE: float = 5.0
+
+func _handle_oxygen(delta: float):
+	if _is_inside_wall():
+		current_oxygen -= OXYGEN_DRAIN * delta / dig_speed
+		current_oxygen = max(0.0, current_oxygen)
+		if current_oxygen <= 0:
+			take_damage(int(OXYGEN_DAMAGE * delta))
+	else:
+		current_oxygen = min(MAX_OXYGEN, current_oxygen + OXYGEN_REGEN * delta)
+
+	var hud = get_node("/root/GameScene/HUD")
+	if hud:
+		hud.update_oxygen(current_oxygen, MAX_OXYGEN)
+
+func _is_inside_wall() -> bool:
+	var map = get_node("/root/GameScene/Map")
+	if map == null:
+		return false
+	# 플레이어 X 좌표가 벽 영역 안인지 체크
+	return global_position.x < map.wall_left_x or \
+		   global_position.x > map.wall_right_x

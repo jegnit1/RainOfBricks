@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var warning_label: Label = $UIRoot/WarningLabel
 @onready var exp_bar: ProgressBar = $UIRoot/ExpBar
 @onready var hp_bar: ProgressBar = $UIRoot/HPBar
+@onready var oxygen_bar: ProgressBar = $UIRoot/OxygenBar
 
 
 func _ready():
@@ -26,6 +27,8 @@ func _ready():
 	hp_bar.max_value = 100
 	hp_bar.value = 100
 	hp_bar.modulate = Color(0, 0.8, 0)
+	oxygen_bar.max_value = 100
+	oxygen_bar.value = 100
 	
 func update_hp(current: float, max_hp: float):
 	hp_bar.max_value = max_hp
@@ -74,6 +77,15 @@ func _on_weight_stage_changed(stage: String):
 			warning_label.text = "⚠ DANGER"
 			warning_label.add_theme_color_override("font_color", Color(1, 0, 0))
 			warning_label.visible = true
+			
+func update_oxygen(current: float, max_oxygen: float):
+	oxygen_bar.max_value = max_oxygen
+	oxygen_bar.value = current
+	var ratio = current / max_oxygen
+	if ratio <= 0.3:
+		oxygen_bar.modulate = Color(1, 0, 0)
+	else:
+		oxygen_bar.modulate = Color(0.3, 0.8, 1.0)
 
 func _on_game_over():
 	game_over_panel.visible = true

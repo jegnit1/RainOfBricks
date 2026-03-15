@@ -2,6 +2,7 @@
 extends Node2D
 
 @onready var map: Node2D = $Map
+@onready var camera: Camera2D = $Player/Camera2D
 
 var shake_intensity: float = 0.0
 var shake_active: bool = false
@@ -13,9 +14,36 @@ func _ready():
 	original_position = position
 	GameManager.weight_stage_changed.connect(_on_weight_stage_changed)
 	GameManager.game_over_started.connect(_on_game_over_started)
+	_play_intro_zoom()
 
 func _process(delta: float):
 	_handle_shake()
+	
+func _play_intro_zoom():
+	get_tree().paused = true
+
+	var map_width = 1880.0
+	var screen_width = 1280.0
+	var fit_zoom = screen_width / map_width  # 약 0.68
+
+	camera.zoom = Vector2(fit_zoom, fit_zoom)
+	camera.position_smoothing_enabled = false
+	# camera.position 건드리지 않음
+
+	var tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+
+	tween.tween_interval(1.5)
+
+	# 줌만 변경
+	tween.tween_property(camera, "zoom",
+		Vector2(1.0, 1.0), 1.2
+	).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+
+	tween.tween_callback(func():
+		camera.position_smoothing_enabled = true
+		get_tree().paused = false
+	)
 
 func _handle_shake():
 	if not shake_active:
@@ -46,7 +74,28 @@ func _on_weight_stage_changed(stage: String):
 func _on_game_over_started():
 	_stop_shake()
 	_clear_cracks()
+	_release_all_bodies()
 	_play_floor_collapse()
+	
+func _release_all_bodies():
+	# 플레이어 자유낙하
+	var player = get_node_or_null("Player")
+	if player:
+		player.set_physics_process(false)
+		# 자체 tween으로 낙하
+		var tween = create_tween()
+		tween.tween_property(player, "position",
+			player.position + Vector2(0, 800), 1.2
+		).set_ease(Tween.EASE_IN)
+
+	# 활성 로봇 자유낙하
+	for node in get_children():
+		if node is CharacterBody2D and node.name != "Player":
+			node.set_physics_process(false)
+			var tween = create_tween()
+			tween.tween_property(node, "position",
+				node.position + Vector2(0, 800), 1.0
+			).set_ease(Tween.EASE_IN)
 
 func _play_floor_collapse():
 	# 바닥 노드만 가져옴

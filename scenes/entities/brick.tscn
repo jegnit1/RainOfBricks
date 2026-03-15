@@ -2,15 +2,23 @@
 
 [ext_resource type="Script" uid="uid://dgmqqjdjpaf4t" path="res://scripts/entities/brick.gd" id="1_thyaw"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_thyaw"]
+friction = 0.8
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4hun1"]
 size = Vector2(60, 60)
 
 [node name="Brick" type="RigidBody2D" unique_id=574680606 groups=["brick"]]
 collision_layer = 4
 collision_mask = 21
+physics_material_override = SubResource("PhysicsMaterial_thyaw")
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_thyaw")
+hp = null
+weight = null
+currency_value = null
+exp_value = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=624160529]
 shape = SubResource("RectangleShape2D_4hun1")

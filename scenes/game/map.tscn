@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b61fcpaprhim7"]
 
 [ext_resource type="Script" uid="uid://y8pvd1t1eej1" path="res://scripts/game/Map.gd" id="1_3fewy"]
+[ext_resource type="PackedScene" uid="uid://hevmvqjl0gjh" path="res://scenes/entities/wall_block.tscn" id="2_fodlk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_07slu"]
 
@@ -10,6 +11,7 @@
 
 [node name="Map" type="Node2D" unique_id=372877564]
 script = ExtResource("1_3fewy")
+wall_block_scene = ExtResource("2_fodlk")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1360279086 groups=["ground"]]
 unique_name_in_owner = true
@@ -40,3 +42,16 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_fodlk")
 
 [node name="Polygon2D" type="Polygon2D" parent="WallRight" unique_id=24757437]
+
+[node name="BottomCover" type="ColorRect" parent="." unique_id=1317300305]
+z_index = -1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 720.0
+offset_right = 1880.0
+offset_bottom = 1520.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)

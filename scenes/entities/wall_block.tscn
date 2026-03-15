@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://hevmvqjl0gjh"]
+
+[ext_resource type="Script" uid="uid://bbkm2vn5hbeyy" path="res://scripts/entities/wall_block.gd" id="1_30xeu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu8p0"]
+size = Vector2(60, 60)
+
+[node name="WallBlock" type="StaticBody2D" unique_id=1683427246]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_30xeu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443147111]
+shape = SubResource("RectangleShape2D_hu8p0")
+
+[node name="BlockVisual" type="Polygon2D" parent="." unique_id=803534229]
+
+[node name="CrackVisual" type="Polygon2D" parent="." unique_id=896304254]
+z_index = 1

@@ -36,6 +36,12 @@ func take_damage(amount: int):
 		_destroy()
 
 func _destroy():
+	# 주변 벽돌 sleeping 해제
+	var bodies = get_colliding_bodies()
+	for body in bodies:
+		if body is RigidBody2D:
+			body.sleeping = false
+			
 	# 재화 지급 (공중이면 2배)
 	var reward = currency_value * 2 if not is_grounded else currency_value
 	GameManager.add_currency(reward)

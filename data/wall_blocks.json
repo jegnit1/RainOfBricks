@@ -1,0 +1,18 @@
+{
+  "blocks": [
+	{
+	  "id": "wall_basic",
+	  "name": "기본 벽",
+	  "hp": 60,
+	  "color": [0.4, 0.4, 0.4],
+	  "treasure_chance": 0.1
+	},
+	{
+	  "id": "wall_hard",
+	  "name": "강화 벽",
+	  "hp": 150,
+	  "color": [0.3, 0.3, 0.35],
+	  "treasure_chance": 0.2
+	}
+  ]
+}
