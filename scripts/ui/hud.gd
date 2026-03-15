@@ -6,6 +6,9 @@ extends CanvasLayer
 @onready var currency_label: Label = $UIRoot/CurrencyLabel
 @onready var game_over_panel: Panel = $UIRoot/GameOverPanel
 @onready var warning_label: Label = $UIRoot/WarningLabel
+@onready var exp_bar: ProgressBar = $UIRoot/ExpBar
+@onready var hp_bar: ProgressBar = $UIRoot/HPBar
+
 
 func _ready():
 	GameManager.weight_changed.connect(_on_weight_changed)
@@ -17,6 +20,31 @@ func _ready():
 	warning_label.visible = false
 	_update_weight(0.0, GameManager.MAX_WEIGHT)
 	_on_currency_changed(0)
+	
+	GameManager.exp_changed.connect(_on_exp_changed)
+	exp_bar.value = 0
+	hp_bar.max_value = 100
+	hp_bar.value = 100
+	hp_bar.modulate = Color(0, 0.8, 0)
+	
+func update_hp(current: float, max_hp: float):
+	hp_bar.max_value = max_hp
+	hp_bar.value = current
+	var ratio = current / max_hp
+	if ratio <= 0.3:
+		hp_bar.modulate = Color(1, 0, 0)
+	elif ratio <= 0.6:
+		hp_bar.modulate = Color(1, 0.6, 0)
+	else:
+		hp_bar.modulate = Color(0, 0.8, 0)
+	
+func _on_exp_changed(current: int, required: int, level: int):
+	if required == -1:
+		exp_bar.value = exp_bar.max_value
+		return
+	exp_bar.max_value = required
+	exp_bar.value = current
+	weight_label.text = "Lv.%d  %d / %d" % [level, current, required]
 
 func _on_weight_changed(current: float, max_weight: float):
 	_update_weight(current, max_weight)

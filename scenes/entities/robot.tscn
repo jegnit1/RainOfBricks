@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://chnhp3wh7m4lq"]
+
+[ext_resource type="Script" uid="uid://co25d5yohe868" path="res://scripts/entities/robot.gd" id="1_b251y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p8kvs"]
+size = Vector2(40, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b251y"]
+size = Vector2(40, 60)
+
+[node name="Robot" type="CharacterBody2D" unique_id=1298114795]
+collision_layer = 8
+collision_mask = 21
+script = ExtResource("1_b251y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1865864660]
+shape = SubResource("RectangleShape2D_p8kvs")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=608706141]
+
+[node name="PowerTimer" type="Timer" parent="." unique_id=1156442108]
+one_shot = true
+
+[node name="DamageTimer" type="Timer" parent="." unique_id=66277609]
+wait_time = 0.5
+
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=1453355665]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=120540214]
+shape = SubResource("RectangleShape2D_b251y")

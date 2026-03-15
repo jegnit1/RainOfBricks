@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://b8m2x04g4kxm4" path="res://scenes/ui/hud.tscn" id="3_ldxrm"]
 [ext_resource type="Script" uid="uid://cdgiawkvbmfba" path="res://scripts/game/BrickSpawner.gd" id="4_vaave"]
 [ext_resource type="PackedScene" uid="uid://lsa5oudexgpx" path="res://scenes/entities/brick.tscn" id="5_gs0nk"]
+[ext_resource type="PackedScene" uid="uid://b3i3det3jy6vf" path="res://scenes/ui/level_up_panel.tscn" id="7_ks7xl"]
+[ext_resource type="Script" uid="uid://c8jia42ksgant" path="res://scripts/game/RobotSpawner.gd" id="8_8cups"]
+[ext_resource type="PackedScene" uid="uid://chnhp3wh7m4lq" path="res://scenes/entities/robot.tscn" id="9_fjeox"]
 
 [node name="GameScene" type="Node2D" unique_id=814715480]
 script = ExtResource("1_b1len")
@@ -20,3 +23,9 @@ position = Vector2(640, 620)
 [node name="BrickSpawner" type="Node2D" parent="." unique_id=1880692533]
 script = ExtResource("4_vaave")
 brick_scene = ExtResource("5_gs0nk")
+
+[node name="LevelUpPanel" parent="." unique_id=747131199 instance=ExtResource("7_ks7xl")]
+
+[node name="RobotSpawner" type="Node2D" parent="." unique_id=701071062]
+script = ExtResource("8_8cups")
+robot_scene = ExtResource("9_fjeox")

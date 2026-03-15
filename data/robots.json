@@ -1,0 +1,46 @@
+{
+  "robots": [
+	{
+	  "id": "robot_basic",
+	  "name": "기본 로봇",
+	  "hp": 50,
+	  "weight": 15.0,
+	  "move_speed": 80.0,
+	  "jump_velocity": -300.0,
+	  "power_duration": 15.0,
+	  "damage": 10,
+	  "damage_interval": 0.5,
+	  "currency_value": 15,
+	  "exp_value": 20,
+	  "can_enter_tunnel": false
+	},
+	{
+	  "id": "robot_high_power",
+	  "name": "고출력 로봇",
+	  "hp": 80,
+	  "weight": 20.0,
+	  "move_speed": 90.0,
+	  "jump_velocity": -350.0,
+	  "power_duration": 12.0,
+	  "damage": 15,
+	  "damage_interval": 0.5,
+	  "currency_value": 25,
+	  "exp_value": 35,
+	  "can_enter_tunnel": false
+	},
+	{
+	  "id": "robot_infinite",
+	  "name": "무한동력 로봇",
+	  "hp": 120,
+	  "weight": 25.0,
+	  "move_speed": 70.0,
+	  "jump_velocity": -280.0,
+	  "power_duration": -1,
+	  "damage": 20,
+	  "damage_interval": 0.5,
+	  "currency_value": 40,
+	  "exp_value": 50,
+	  "can_enter_tunnel": false
+	}
+  ]
+}

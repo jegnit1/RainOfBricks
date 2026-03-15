@@ -1,0 +1,11 @@
+{
+  "stats": [
+	{ "id": "attack_power",  "name": "공격력",    "description": "공격력 +5",       "type": "weapon_damage",      "value": 5    },
+	{ "id": "attack_speed",  "name": "공격속도",   "description": "공격속도 +0.5",    "type": "weapon_attack_speed", "value": 0.5  },
+	{ "id": "move_speed",    "name": "이동속도",   "description": "이동속도 +20",     "type": "move_speed",          "value": 20.0 },
+	{ "id": "jump_power",    "name": "점프력",     "description": "점프력 +40",       "type": "jump_velocity",       "value": 40.0 },
+	{ "id": "dig_speed",     "name": "채굴속도",   "description": "채굴속도 +0.3",    "type": "dig_speed",           "value": 0.3  },
+	{ "id": "luck",          "name": "행운",       "description": "행운 +1",          "type": "luck",                "value": 1    },
+	{ "id": "interest",      "name": "이자",       "description": "이자율 +2%",       "type": "interest_rate",       "value": 0.02 }
+  ]
+}

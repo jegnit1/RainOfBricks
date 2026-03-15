@@ -4,6 +4,7 @@ extends RigidBody2D
 @export var hp: int = 30
 @export var weight: float = 10.0
 @export var currency_value: int = 5
+@export var exp_value: int = 10  # 벽돌 파괴 시 경험치
 
 var is_grounded: bool = false
 var was_hit_in_air: bool = false
@@ -38,6 +39,7 @@ func _destroy():
 	# 재화 지급 (공중이면 2배)
 	var reward = currency_value * 2 if not is_grounded else currency_value
 	GameManager.add_currency(reward)
+	GameManager.add_exp(exp_value)
 	
 	# 착지한 벽돌이 파괴되면 무게 제거
 	if is_grounded:

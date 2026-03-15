@@ -10,11 +10,40 @@ const GRAVITY: float = 980.0
 @export var weapon_width: float = 32.0
 @export var weapon_damage: int = 10
 @export var weapon_attack_speed: float = 3.0  # 초당 공격 횟수
+@export var move_speed: float = 200.0    # MOVE_SPEED를 변수로 전환
+@export var jump_velocity: float = -400.0
+@export var dig_speed: float = 1.0
+@export var luck: int = 0
+@export var interest_rate: float = 0.0
+
+@onready var level_up_panel = get_node("/root/GameScene/LevelUpPanel")
 
 # 내부 변수
 var attack_timer: float = 0.0
 var effect_timer: float = 0.0
 const EFFECT_DURATION: float = 0.1
+
+const MAX_HP: float = 100.0
+var current_hp: float = 100.0
+var invincible_timer: float = 0.0  # 무적 시간 (피해 중복 방지)
+const INVINCIBLE_DURATION: float = 0.3
+
+func take_damage(amount: int):
+	if invincible_timer > 0:
+		return
+	current_hp -= amount
+	invincible_timer = INVINCIBLE_DURATION
+
+	# HUD 갱신
+	var hud = get_node("/root/GameScene/HUD")
+	if hud:
+		hud.update_hp(current_hp, MAX_HP)
+
+	if current_hp <= 0:
+		_on_player_dead()
+
+func _on_player_dead():
+	GameManager.trigger_game_over()
 
 @onready var attack_hitbox: Area2D = $AttackHitbox
 @onready var attack_hitbox_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
@@ -22,6 +51,8 @@ const EFFECT_DURATION: float = 0.1
 
 func _ready():
 	_setup_weapon(weapon_reach, weapon_width)
+	level_up_panel.stat_selected.connect(_on_stat_selected)
+
 
 func _setup_weapon(reach: float, width: float):
 	var shape = RectangleShape2D.new()
@@ -40,10 +71,31 @@ func _setup_weapon(reach: float, width: float):
 	attack_effect.visible = false
 	attack_effect.z_index = 100
 	attack_effect.z_as_relative = false
+	
+func _on_stat_selected(stat: Dictionary):
+	match stat["type"]:
+		"weapon_damage":
+			weapon_damage += int(stat["value"])
+			equip_weapon(weapon_reach, weapon_width, weapon_damage, weapon_attack_speed)
+		"weapon_attack_speed":
+			weapon_attack_speed += stat["value"]
+			equip_weapon(weapon_reach, weapon_width, weapon_damage, weapon_attack_speed)
+		"move_speed":
+			move_speed += stat["value"]
+		"jump_velocity":
+			jump_velocity -= stat["value"]  # 음수이므로 빼기
+		"dig_speed":
+			dig_speed += stat["value"]
+		"luck":
+			luck += int(stat["value"])
+		"interest_rate":
+			interest_rate += stat["value"]
 
 func _physics_process(delta: float):
 	if GameManager.is_game_over:
 		return
+	if invincible_timer > 0:
+		invincible_timer -= delta
 
 	_apply_gravity(delta)
 	_handle_movement()
@@ -63,15 +115,15 @@ func _apply_gravity(delta: float):
 
 func _handle_movement():
 	if Input.is_action_pressed("move_left"):
-		velocity.x = -MOVE_SPEED
+		velocity.x = -move_speed
 	elif Input.is_action_pressed("move_right"):
-		velocity.x = MOVE_SPEED
+		velocity.x = move_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, MOVE_SPEED)
+		velocity.x = move_toward(velocity.x, 0, move_speed)
 
 func _handle_jump():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jump_velocity
 
 func _handle_attack(delta: float):
 	# 쿨타임 감소

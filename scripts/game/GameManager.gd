@@ -6,7 +6,15 @@ signal game_over_started  # 연출 시작용
 
 signal weight_changed(current: float, max_weight: float)
 signal currency_changed(amount: int)
+
 signal weight_stage_changed(stage: String)  # "normal" / "warning" / "danger"
+
+signal level_up(new_level: int)
+signal exp_changed(current_exp: int, required_exp: int, level: int)
+
+var current_exp: int = 0
+var current_level: int = 1
+var exp_table: Array = []  # JSON에서 로드
 
 var MAX_WEIGHT: float = 100.0  # const → var 로 변경 (스테이지별 가변)
 
@@ -17,6 +25,34 @@ var current_weight_stage: String = "normal"
 
 func _ready():
 	print("GameManager 초기화 완료")
+	_load_exp_table()
+	
+func _load_exp_table():
+	var file = FileAccess.open("res://data/exp_table.json", FileAccess.READ)
+	if file:
+		var data = JSON.parse_string(file.get_as_text())
+		exp_table = data["levels"]
+		
+func add_exp(amount: int):
+	if is_game_over:
+		return
+	current_exp += amount
+	_check_level_up()
+	var req = _get_required_exp(current_level + 1)
+	exp_changed.emit(current_exp, req, current_level)
+
+func _check_level_up():
+	var next_level = current_level + 1
+	var required = _get_required_exp(next_level)
+	if required != -1 and current_exp >= required:
+		current_level = next_level
+		level_up.emit(current_level)
+
+func _get_required_exp(level: int) -> int:
+	for entry in exp_table:
+		if entry["level"] == level:
+			return entry["exp_required"]
+	return -1  # 최대 레벨
 
 # 스테이지별 최대 무게 변경
 func set_max_weight(value: float):
@@ -71,7 +107,10 @@ func reset():
 	current_weight = 0.0
 	is_game_over = false
 	currency = 0
+	current_exp = 0
+	current_level = 1
 	current_weight_stage = "normal"
 	weight_changed.emit(current_weight, MAX_WEIGHT)
 	currency_changed.emit(currency)
 	weight_stage_changed.emit(current_weight_stage)
+	exp_changed.emit(0, _get_required_exp(2), 1)

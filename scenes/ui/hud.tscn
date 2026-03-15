@@ -94,4 +94,20 @@ offset_bottom = 170.0
 theme_override_font_sizes/font_size = 36
 horizontal_alignment = 1
 
+[node name="ExpBar" type="ProgressBar" parent="UIRoot" unique_id=2075885374]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 490.0
+offset_top = 55.0
+offset_right = 790.0
+offset_bottom = 75.0
+
+[node name="HPBar" type="ProgressBar" parent="UIRoot" unique_id=2016582599]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 40.0
+offset_top = 20.0
+offset_right = 340.0
+offset_bottom = 50.0
+
 [connection signal="pressed" from="UIRoot/GameOverPanel/RestartButton" to="." method="_on_restart_button_pressed"]
