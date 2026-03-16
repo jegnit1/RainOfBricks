@@ -26,10 +26,14 @@ func _ready():
 	_generate_wall_blocks()
 
 func _build_map():
-	floor_y = map_height - 40.0
+	# floor_y를 BLOCK_SIZE 배수로 정렬
+	var raw_floor_y = map_height - 40.0
+	floor_y = int(raw_floor_y / BLOCK_SIZE) * BLOCK_SIZE  # 660.0
+	
 	wall_left_x = wall_thickness
 	wall_right_x = map_width - wall_thickness
 	ceiling_y = 0.0
+
 	_setup_floor()
 	_setup_wall_left()
 	_setup_wall_right()
@@ -43,7 +47,7 @@ func _make_rect_polygon(width: float, height: float) -> PackedVector2Array:
 	])
 
 func _setup_floor():
-	floor_body.position = Vector2(map_width / 2.0, map_height - 20.0)
+	floor_body.position = Vector2(map_width / 2.0, floor_y + 20.0)
 
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(map_width, 40.0)
@@ -89,7 +93,12 @@ func _load_wall_data():
 		wall_block_data = data["blocks"]
 
 func _generate_wall_blocks():
-	var rows = int(map_height / BLOCK_SIZE)
+	# 바닥 위까지만 블록 생성
+	var rows = ceili(floor_y / BLOCK_SIZE)  # map_height 대신 floor_y 사용
+	print("floor_y:", floor_y, " rows:", rows)
+	print("wall_left_x:", wall_left_x, " wall_right_x:", wall_right_x)
+	print("left_cols:", int(wall_thickness / BLOCK_SIZE))
+	print("right_start_col:", int(wall_right_x / BLOCK_SIZE), " right_end_col:", int(map_width / BLOCK_SIZE))
 	var left_cols = int(wall_thickness / BLOCK_SIZE)
 	var right_start_col = int(wall_right_x / BLOCK_SIZE)
 	var right_end_col = int(map_width / BLOCK_SIZE)
@@ -103,6 +112,10 @@ func _generate_wall_blocks():
 			_place_block(col, row)
 
 func _place_block(col: int, row: int):
+	var block_bottom = (row + 1) * BLOCK_SIZE
+	if block_bottom > floor_y:
+		return
+
 	var block = wall_block_scene.instantiate()
 	add_child(block)
 

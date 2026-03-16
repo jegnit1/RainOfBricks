@@ -11,16 +11,15 @@
 [ext_resource type="PackedScene" uid="uid://chnhp3wh7m4lq" path="res://scenes/entities/robot.tscn" id="9_fjeox"]
 
 [node name="GameScene" type="Node2D" unique_id=814715480]
-process_mode = 3
 script = ExtResource("1_b1len")
 
 [node name="Map" parent="." unique_id=372877564 instance=ExtResource("2_ldxrm")]
 
 [node name="Player" parent="." unique_id=73003246 instance=ExtResource("2_dsxmn")]
+process_mode = 0
 position = Vector2(940, 620)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=877438271]
-process_mode = 3
 limit_left = 0
 limit_top = 2
 limit_right = 1880

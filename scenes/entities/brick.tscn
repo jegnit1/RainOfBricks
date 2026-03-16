@@ -15,10 +15,6 @@ physics_material_override = SubResource("PhysicsMaterial_thyaw")
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_thyaw")
-hp = null
-weight = null
-currency_value = null
-exp_value = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=624160529]
 shape = SubResource("RectangleShape2D_4hun1")

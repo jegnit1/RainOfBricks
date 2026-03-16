@@ -17,6 +17,7 @@ var treasure_grade: String = "bronze"  # bronze / silver / gold / diamond
 
 @onready var block_visual: Polygon2D = $BlockVisual
 @onready var crack_visual: Polygon2D = $CrackVisual
+@onready var crack_lines: Node2D = $CrackLines
 
 func _ready():
 	_setup_visuals()
@@ -80,16 +81,36 @@ func _update_crack():
 		_draw_cracks(2, 0.6)
 
 func _draw_cracks(stage: int, alpha: float):
-	# 균열 패턴을 Polygon2D로 표현
-	# 블록 색상을 어둡게 오버레이
-	crack_visual.color = Color(0, 0, 0, alpha * 0.4)
-
-	# 블록 테두리를 어둡게
 	block_visual.color = Color(
-		block_color.r * (1.0 - alpha * 0.3),
-		block_color.g * (1.0 - alpha * 0.3),
-		block_color.b * (1.0 - alpha * 0.3)
+		block_color.r * (1.0 - alpha * 0.25),
+		block_color.g * (1.0 - alpha * 0.25),
+		block_color.b * (1.0 - alpha * 0.25)
 	)
+	crack_visual.color = Color(0, 0, 0, alpha * 0.3)
+
+	# 기존 균열선 제거
+	for child in crack_lines.get_children():
+		child.queue_free()
+
+	var half = BLOCK_SIZE / 2.0
+
+	if stage >= 1:
+		# 1단계: 균열선 2개
+		_add_crack_line([Vector2(-half + 4, -half + 2), Vector2(2, 4), Vector2(-2, half - 3)], alpha)
+		_add_crack_line([Vector2(half - 6, -half + 5), Vector2(-3, 2), Vector2(1, half - 4)], alpha)
+
+	if stage >= 2:
+		# 2단계: 추가 균열선 2개
+		_add_crack_line([Vector2(-half + 2, 2), Vector2(half - 4, -3)], alpha)
+		_add_crack_line([Vector2(-3, -half + 4), Vector2(2, half - 2)], alpha)
+	
+func _add_crack_line(points: Array, alpha: float):
+	var line = Line2D.new()
+	line.points = PackedVector2Array(points)
+	line.width = 1.5
+	line.default_color = Color(0.05, 0.02, 0.0, alpha)
+	line.z_index = 3
+	crack_lines.add_child(line)
 
 func _show_treasure_silhouette():
 	# 보물상자 등급별 실루엣 색상

@@ -13,6 +13,8 @@ func _ready():
 func _process(delta: float):
 	if GameManager.is_game_over:
 		return
+	if get_tree().paused:  # pause 중엔 타이머 정지
+		return
 	
 	spawn_timer += delta
 	if spawn_timer >= spawn_interval:

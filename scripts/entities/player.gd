@@ -8,6 +8,10 @@ const GRAVITY: float = 980.0
 var dig_timer: float = 0.0
 var is_digging: bool = false
 
+var dig_indicator: Polygon2D = null
+var dig_effect_timer: float = 0.0
+const DIG_EFFECT_DURATION: float = 0.15
+
 # 무기 스탯 (무기 아이템 장착 시 교체 예정)
 @export var weapon_reach: float = 48.0
 @export var weapon_width: float = 32.0
@@ -58,6 +62,22 @@ func _on_player_dead():
 func _ready():
 	_setup_weapon(weapon_reach, weapon_width)
 	level_up_panel.stat_selected.connect(_on_stat_selected)
+	_setup_dig_indicator()
+	print("dig_indicator 생성됨:", dig_indicator != null)
+	
+func _setup_dig_indicator():
+	dig_indicator = Polygon2D.new()
+	# 공격 이펙트와 동일한 방식 - 플레이어 기준 오른쪽으로 뻗는 삽 모양
+	dig_indicator.polygon = PackedVector2Array([
+		Vector2(0,   -8),
+		Vector2(50,  -8),
+		Vector2(50,   8),
+		Vector2(0,    8),
+	])
+	dig_indicator.color = Color(0.3, 0.9, 1.0, 0.0)
+	dig_indicator.z_index = 50
+	dig_indicator.z_as_relative = false
+	add_child(dig_indicator)  # 플레이어 자식으로 추가 (공격이펙트와 동일)
 
 
 func _setup_weapon(reach: float, width: float):
@@ -170,8 +190,15 @@ func equip_weapon(reach: float, width: float, damage: int, attack_speed: float):
 	_setup_weapon(reach, width)
 	
 func _handle_dig(delta: float):
+	# 이펙트 타이머 감소
+	if dig_effect_timer > 0:
+		dig_effect_timer -= delta
+
+	_update_dig_indicator()
+
 	if Input.is_action_pressed("dig") and dig_timer <= 0:
-		dig_timer = dig_cooldown / dig_speed  # dig_speed 스탯 반영
+		dig_timer = dig_cooldown / dig_speed
+		dig_effect_timer = DIG_EFFECT_DURATION  # 채굴 시 이펙트 시작
 		_do_dig()
 
 func _do_dig():
@@ -214,6 +241,8 @@ const OXYGEN_DRAIN: float = 15.0
 const OXYGEN_REGEN: float = 30.0
 const OXYGEN_DAMAGE: float = 5.0
 
+
+
 func _handle_oxygen(delta: float):
 	if _is_inside_wall():
 		current_oxygen -= OXYGEN_DRAIN * delta / dig_speed
@@ -231,6 +260,20 @@ func _is_inside_wall() -> bool:
 	var map = get_node("/root/GameScene/Map")
 	if map == null:
 		return false
-	# 플레이어 X 좌표가 벽 영역 안인지 체크
-	return global_position.x < map.wall_left_x or \
-		   global_position.x > map.wall_right_x
+	var half_width = 16.0  # 플레이어 너비 절반
+	return (global_position.x - half_width) < map.wall_left_x or \
+		   (global_position.x + half_width) > map.wall_right_x
+		
+func _update_dig_indicator():
+	if dig_indicator == null:
+		return
+
+	# 이펙트 타이머 기반으로 alpha 결정 (공격이펙트와 동일한 방식)
+	if dig_effect_timer > 0:
+		var alpha = dig_effect_timer / DIG_EFFECT_DURATION
+		var mouse_pos = get_global_mouse_position()
+		var dir = sign(mouse_pos.x - global_position.x)
+		dig_indicator.rotation = 0 if dir > 0 else PI
+		dig_indicator.color = Color(0.3, 0.9, 1.0, alpha * 0.8)
+	else:
+		dig_indicator.color = Color(0.3, 0.9, 1.0, 0.0)

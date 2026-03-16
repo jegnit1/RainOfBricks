@@ -24,22 +24,27 @@ func _play_intro_zoom():
 
 	var map_width = 1880.0
 	var screen_width = 1280.0
-	var fit_zoom = screen_width / map_width  # 약 0.68
+	var fit_zoom = screen_width / map_width
 
 	camera.zoom = Vector2(fit_zoom, fit_zoom)
 	camera.position_smoothing_enabled = false
-	# camera.position 건드리지 않음
+
+	# 줌아웃 시 카메라를 맵 중앙으로 강제 이동
+	# Camera2D는 플레이어 자식이므로 offset으로 보정
+	var map_center_x = map_width / 2.0   # 940
+	var player_x = 940.0
+	camera.offset = Vector2(map_center_x - player_x, 0)  # 0 (이미 중앙)
 
 	var tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-
 	tween.tween_interval(1.5)
-
-	# 줌만 변경
 	tween.tween_property(camera, "zoom",
 		Vector2(1.0, 1.0), 1.2
 	).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-
+	# 줌인 완료 후 offset 원복
+	tween.parallel().tween_property(camera, "offset",
+		Vector2.ZERO, 1.2
+	).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback(func():
 		camera.position_smoothing_enabled = true
 		get_tree().paused = false

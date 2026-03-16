@@ -21,6 +21,8 @@ func _load_robot_data():
 func _process(delta: float):
 	if GameManager.is_game_over:
 		return
+	if get_tree().paused:
+		return
 	spawn_timer += delta
 	if spawn_timer >= spawn_interval:
 		spawn_timer = 0.0

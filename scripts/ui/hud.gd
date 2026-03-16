@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var game_over_panel: Panel = $UIRoot/GameOverPanel
 @onready var warning_label: Label = $UIRoot/WarningLabel
 @onready var exp_bar: ProgressBar = $UIRoot/ExpBar
+@onready var exp_label: Label = $UIRoot/ExpLabel
 @onready var hp_bar: ProgressBar = $UIRoot/HPBar
 @onready var oxygen_bar: ProgressBar = $UIRoot/OxygenBar
 
@@ -42,12 +43,9 @@ func update_hp(current: float, max_hp: float):
 		hp_bar.modulate = Color(0, 0.8, 0)
 	
 func _on_exp_changed(current: int, required: int, level: int):
-	if required == -1:
-		exp_bar.value = exp_bar.max_value
-		return
-	exp_bar.max_value = required
+	exp_bar.max_value = required if required != -1 else exp_bar.max_value
 	exp_bar.value = current
-	weight_label.text = "Lv.%d  %d / %d" % [level, current, required]
+	exp_label.text = "Lv.%d  %d / %d" % [level, current, required]
 
 func _on_weight_changed(current: float, max_weight: float):
 	_update_weight(current, max_weight)

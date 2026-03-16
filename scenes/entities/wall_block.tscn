@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bbkm2vn5hbeyy" path="res://scripts/entities/wall_block.gd" id="1_30xeu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hu8p0"]
-size = Vector2(60, 60)
+size = Vector2(30, 30)
 
 [node name="WallBlock" type="StaticBody2D" unique_id=1683427246]
 collision_layer = 16
@@ -17,3 +17,5 @@ shape = SubResource("RectangleShape2D_hu8p0")
 
 [node name="CrackVisual" type="Polygon2D" parent="." unique_id=896304254]
 z_index = 1
+
+[node name="CrackLines" type="Node2D" parent="." unique_id=239121052]

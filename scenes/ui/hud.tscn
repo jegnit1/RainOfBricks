@@ -119,4 +119,9 @@ offset_top = 55.0
 offset_right = 340.0
 offset_bottom = 75.0
 
+[node name="ExpLabel" type="Label" parent="UIRoot" unique_id=609688376]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="pressed" from="UIRoot/GameOverPanel/RestartButton" to="." method="_on_restart_button_pressed"]
