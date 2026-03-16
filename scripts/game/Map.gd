@@ -6,8 +6,7 @@ extends Node2D
 @export var wall_thickness: float = 300.0  # 벽 두께 대폭 확장
 @export var wall_block_scene: PackedScene
 
-# 기존 WALL_THICKNESS 상수 제거 → @export로 변경
-# 나머지 코드는 wall_thickness 변수로 교체
+const BLOCK_SIZE: float = 30.0
 
 var floor_y: float
 var wall_left_x: float
@@ -27,11 +26,10 @@ func _ready():
 	_generate_wall_blocks()
 
 func _build_map():
-	floor_y = map_height - wall_thickness / 7.5  # 바닥 두께는 40 유지
+	floor_y = map_height - 40.0
 	wall_left_x = wall_thickness
 	wall_right_x = map_width - wall_thickness
 	ceiling_y = 0.0
-
 	_setup_floor()
 	_setup_wall_left()
 	_setup_wall_right()
@@ -91,44 +89,37 @@ func _load_wall_data():
 		wall_block_data = data["blocks"]
 
 func _generate_wall_blocks():
-	if wall_block_scene == null:
-		return
+	var rows = int(map_height / BLOCK_SIZE)
+	var left_cols = int(wall_thickness / BLOCK_SIZE)
+	var right_start_col = int(wall_right_x / BLOCK_SIZE)
+	var right_end_col = int(map_width / BLOCK_SIZE)
 
-	var block_size = 60.0
-	var rows = int(map_height / block_size)
-
-	# 왼쪽 벽 생성
-	var left_cols = int(wall_thickness / block_size)
-	print("왼쪽 벽 col 범위: 0 ~", left_cols - 1)
 	for col in range(left_cols):
 		for row in range(rows):
-			_place_block(col, row, block_size, true)
+			_place_block(col, row)
 
-	# 오른쪽 벽 생성
-	var right_start_col = int(wall_right_x / block_size)
-	var right_end_col = int(map_width / block_size)
-	print("오른쪽 벽 col 범위:", right_start_col, "~", right_end_col - 1)
-	print("rows:", rows)
 	for col in range(right_start_col, right_end_col):
 		for row in range(rows):
-			_place_block(col, row, block_size, false)
+			_place_block(col, row)
 
-func _place_block(col: int, row: int, block_size: float, is_left: bool):
+func _place_block(col: int, row: int):
 	var block = wall_block_scene.instantiate()
 	add_child(block)
 
-	var height_ratio = 1.0 - (float(row) / (map_height / block_size))
+	var height_ratio = 1.0 - (float(row) / (map_height / BLOCK_SIZE))
 	var treasure_data = _roll_treasure(height_ratio)
 	var data = wall_block_data[0]
-	var pos = Vector2(col * block_size + block_size / 2.0,
-					  row * block_size + block_size / 2.0)
+
+	# 블록 위치: col/row × BLOCK_SIZE
+	var pos = Vector2(
+		col * BLOCK_SIZE + BLOCK_SIZE / 2.0,
+		row * BLOCK_SIZE + BLOCK_SIZE / 2.0
+	)
 	block.setup(data, pos, treasure_data)
 
-	# key를 로컬 변수로 고정
 	var key = Vector2i(col, row)
 	wall_blocks[key] = block
 
-	# 고정된 key 캡처
 	var captured_key = key
 	block.block_destroyed.connect(func(b):
 		wall_blocks.erase(captured_key)
@@ -154,7 +145,7 @@ func _roll_treasure(height_ratio: float) -> Dictionary:
 
 # 외부에서 특정 위치 블록 제거 (Player에서 호출)
 func remove_block_at(world_pos: Vector2):
-	var block_size = 60.0
+	var block_size = 30.0
 	var col = int(world_pos.x / block_size)
 	var row = int(world_pos.y / block_size)
 	var key = Vector2i(col, row)
@@ -163,23 +154,16 @@ func remove_block_at(world_pos: Vector2):
 		wall_blocks.erase(key)
 
 func dig_block_at(world_pos: Vector2, dig_power: int):
-	var block_size = 60.0
-	var col = int(world_pos.x / block_size)
-	var row = int(world_pos.y / block_size)
+	var col = int(world_pos.x / BLOCK_SIZE)
+	var row = int(world_pos.y / BLOCK_SIZE)
 	var key = Vector2i(col, row)
-	
-	print("dig - col:", col, " row:", row, " 존재:", wall_blocks.has(key), " 전체 키 수:", wall_blocks.size())
-	
+
 	if not wall_blocks.has(key):
 		return
-	
 	var block = wall_blocks[key]
-	print("블록 유효:", is_instance_valid(block))  # 추가
-	
 	if not is_instance_valid(block):
 		wall_blocks.erase(key)
 		return
-	
 	block.take_dig(dig_power)
 	if not is_instance_valid(block):
 		wall_blocks.erase(key)

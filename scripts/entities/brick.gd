@@ -2,7 +2,7 @@
 extends RigidBody2D
 
 @export var hp: int = 30
-@export var weight: float = 10.0
+@export var weight: float = 5.0
 @export var currency_value: int = 5
 @export var exp_value: int = 10  # 벽돌 파괴 시 경험치
 

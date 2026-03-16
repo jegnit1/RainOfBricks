@@ -178,16 +178,34 @@ func _do_dig():
 	var mouse_pos = get_global_mouse_position()
 	var dir = sign(mouse_pos.x - global_position.x)
 
-	# 마우스 위치를 그대로 dig 위치로 사용
-	# 단, X축은 플레이어 기준 방향으로 제한
+	# 플레이어가 서있는 col 계산
+	var map = get_node("/root/GameScene/Map")
+	if map == null:
+		return
+
+	var block_size = 30.0
+	var player_col = int(global_position.x / block_size)
+
+	# 방향에 따라 바로 인접한 col만 채굴 가능
+	var target_col: int
+	if dir > 0:
+		target_col = player_col + 1  # 오른쪽 바로 다음 칸
+	else:
+		target_col = player_col - 1  # 왼쪽 바로 다음 칸
+
+	# 플레이어 Y 위치 기준으로 채굴 가능한 row 범위 (상하 1칸)
+	var player_row = int(global_position.y / block_size)
+
+	# 마우스 Y로 어느 row를 팔지 선택 (플레이어 ±1 범위 내)
+	var mouse_row = int(mouse_pos.y / block_size)
+	var target_row = clamp(mouse_row, player_row - 1, player_row + 1)
+
 	var dig_pos = Vector2(
-		mouse_pos.x,   # 마우스 X 위치 그대로
-		mouse_pos.y    # 마우스 Y 위치 그대로
+		target_col * block_size + block_size / 2.0,
+		target_row * block_size + block_size / 2.0
 	)
 
-	var map = get_node("/root/GameScene/Map")
-	if map:
-		map.dig_block_at(dig_pos, dig_power)
+	map.dig_block_at(dig_pos, dig_power)
 		
 # 산소 시스템
 const MAX_OXYGEN: float = 100.0

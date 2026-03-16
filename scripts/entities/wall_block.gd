@@ -3,7 +3,7 @@ extends StaticBody2D
 
 signal block_destroyed(block: Node)
 
-const BLOCK_SIZE: float = 60.0
+const BLOCK_SIZE: float = 30.0
 
 var max_hp: int = 60
 var current_hp: int = 60
