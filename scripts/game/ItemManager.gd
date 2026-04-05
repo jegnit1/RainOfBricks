@@ -26,6 +26,9 @@ func _load_item_db() -> void:
 	var parsed = JSON.parse_string(file.get_as_text())
 	if parsed is Array:
 		_item_db = parsed
+		print("ItemManager: 아이템 로드 완료 - ", _item_db.size(), "개")
+	else:
+		print("ItemManager: 파싱 실패 - ", typeof(parsed))
 
 # ── DB 조회 ──────────────────────────────────────
 func get_item_by_id(id: String) -> Dictionary:
@@ -42,6 +45,7 @@ func _filter_and_pick(source: String, n: int) -> Array:
 	var pool: Array = _item_db.filter(
 		func(i): return source in i.get("sources", [])
 	)
+	print("ItemManager: ", source, " 풀 크기 = ", pool.size(), " / 전체 DB = ", _item_db.size())
 	if pool.is_empty():
 		return []
 	pool.shuffle()
@@ -153,15 +157,15 @@ func _apply_effect(player: Node, eff: Dictionary) -> void:
 			# 2.0 → +0.02 (2%)
 			player.interest_rate += val / 100.0
 		"gold_gain_mult":
-			# 재화 획득 배율 누적 (GameManager에서 참조 예정)
-			player.gold_gain_mult = player.get("gold_gain_mult", 1.0) + val
+			player.gold_gain_mult += val
 		"robot_gold_mult":
-			player.robot_gold_mult = player.get("robot_gold_mult", 1.0) + val
+			player.robot_gold_mult += val
 		"mine_gold_mult":
-			player.mine_gold_mult = player.get("mine_gold_mult", 1.0) + val
+			player.mine_gold_mult += val
 		"kiosk_price_mult":
-			# 상점 가격 배율 (음수 = 할인)
-			player.kiosk_price_mult = player.get("kiosk_price_mult", 1.0) + val
+			player.kiosk_price_mult += val
+		"fall_dmg_reduction":
+			player.fall_dmg_reduction += val
 
 		# ── 산소 / 무게 ───────────────────────────
 		"oxygen_drain_rate":
@@ -175,7 +179,7 @@ func _apply_effect(player: Node, eff: Dictionary) -> void:
 
 		# ── 낙사 피해 감소 (미구현, 변수 누적만) ───
 		"fall_dmg_reduction":
-			player.fall_dmg_reduction = player.get("fall_dmg_reduction", 0.0) + val
+			player.fall_dmg_reduction += val
 
 func _refresh_hp_hud(player: Node) -> void:
 	var hud = get_tree().get_nodes_in_group("hud")
@@ -190,7 +194,10 @@ func get_player_stat(stat_key: String, default_val: float = 0.0) -> float:
 	var players = get_tree().get_nodes_in_group("player")
 	if players.is_empty():
 		return default_val
-	return float(players[0].get(stat_key, default_val))
+	var player = players[0]
+	if stat_key in player:
+		return float(player.get(stat_key))
+	return default_val
 
 # ── 리셋 (게임오버 / 재시작 시) ──────────────────
 func reset() -> void:

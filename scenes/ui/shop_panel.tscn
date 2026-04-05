@@ -1,13 +1,13 @@
-[gd_scene format=3 uid="uid://shop_panel_001"]
+[gd_scene format=3 uid="uid://u5jkajw5b4t4"]
 
-[ext_resource type="Script" path="res://scripts/ui/shop_panel.gd" id="1_shop"]
+[ext_resource type="Script" uid="uid://bwvmtxesqvn48" path="res://scripts/ui/shop_panel.gd" id="1_shop"]
 
-[node name="ShopPanel" type="CanvasLayer"]
-layer = 10
+[node name="ShopPanel" type="CanvasLayer" unique_id=536261278]
 process_mode = 3
+layer = 10
 script = ExtResource("1_shop")
 
-[node name="UIRoot" type="Control" parent="."]
+[node name="UIRoot" type="Control" parent="." unique_id=1969835385]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackGround" type="ColorRect" parent="UIRoot"]
+[node name="BackGround" type="ColorRect" parent="UIRoot" unique_id=1107525104]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +25,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.72)
 
-[node name="PanelContainer" type="PanelContainer" parent="UIRoot"]
+[node name="PanelContainer" type="PanelContainer" parent="UIRoot" unique_id=1322746817]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,39 +39,39 @@ offset_bottom = 230.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBox" type="VBoxContainer" parent="UIRoot/PanelContainer"]
+[node name="VBox" type="VBoxContainer" parent="UIRoot/PanelContainer" unique_id=632710927]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TopBar" type="HBoxContainer" parent="UIRoot/PanelContainer/VBox"]
+[node name="TopBar" type="HBoxContainer" parent="UIRoot/PanelContainer/VBox" unique_id=1420373832]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="UIRoot/PanelContainer/VBox/TopBar"]
+[node name="TitleLabel" type="Label" parent="UIRoot/PanelContainer/VBox/TopBar" unique_id=857681968]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "🛒  SHOP"
-theme_override_font_sizes/font_size = 26
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 26
+text = "🛒  SHOP"
 
-[node name="CurrencyLabel" type="Label" parent="UIRoot/PanelContainer/VBox/TopBar"]
+[node name="CurrencyLabel" type="Label" parent="UIRoot/PanelContainer/VBox/TopBar" unique_id=1243749976]
 layout_mode = 2
 size_flags_horizontal = 8
-text = "💰 0"
-theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(1, 0.95, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+text = "💰 0"
 
-[node name="Scroll" type="ScrollContainer" parent="UIRoot/PanelContainer/VBox"]
+[node name="Scroll" type="ScrollContainer" parent="UIRoot/PanelContainer/VBox" unique_id=758166778]
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 300)
 
-[node name="ItemList" type="HBoxContainer" parent="UIRoot/PanelContainer/VBox/Scroll"]
+[node name="ItemList" type="HBoxContainer" parent="UIRoot/PanelContainer/VBox/Scroll" unique_id=1466564631]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="CloseButton" type="Button" parent="UIRoot/PanelContainer/VBox"]
-layout_mode = 2
+[node name="CloseButton" type="Button" parent="UIRoot/PanelContainer/VBox" unique_id=1293024347]
 custom_minimum_size = Vector2(0, 40)
-text = "닫기  [W]"
+layout_mode = 2
 theme_override_font_sizes/font_size = 16
+text = "닫기  [W]"

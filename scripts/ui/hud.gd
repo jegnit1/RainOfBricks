@@ -35,11 +35,34 @@ func _ready():
 
 	GameManager.exp_changed.connect(_on_exp_changed)
 	exp_bar.value = 0
+	# 경험치 바를 하단 얇은 게이지로 변신
+	exp_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	exp_bar.custom_minimum_size.y = 6
+	exp_bar.offset_top = -6
+	exp_bar.offset_bottom = 0
+	exp_bar.show_percentage = false
+	var exp_sb = StyleBoxFlat.new()
+	exp_sb.bg_color = Color(0.4, 0.8, 1.0) # Light blue
+	exp_bar.add_theme_stylebox_override("fill", exp_sb)
+	exp_label.visible = false # 기존 숫자 텍스트 숨김
+	
 	var player = get_node_or_null("/root/GameScene/Player")
 	var init_max_hp = player.max_hp if player else 100.0
 	hp_bar.max_value = init_max_hp
 	hp_bar.value = init_max_hp
 	hp_bar.modulate = Color(0, 0.8, 0)
+	hp_bar.show_percentage = false
+	
+	var hp_label = Label.new()
+	hp_label.name = "HPLabel"
+	hp_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	hp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hp_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	hp_label.add_theme_font_size_override("font_size", 14)
+	hp_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0))
+	hp_label.text = "%d / %d" % [init_max_hp, init_max_hp]
+	hp_bar.add_child(hp_label)
+	
 	oxygen_bar.max_value = 100
 	oxygen_bar.value = 100
 
@@ -48,6 +71,11 @@ func _ready():
 func update_hp(current: float, max_hp: float):
 	hp_bar.max_value = max_hp
 	hp_bar.value = current
+	
+	var hp_label = hp_bar.get_node_or_null("HPLabel")
+	if hp_label:
+		hp_label.text = "%d / %d" % [int(current), int(max_hp)]
+		
 	var ratio = current / max_hp
 	if ratio <= 0.3:
 		hp_bar.modulate = Color(1, 0, 0)
@@ -107,10 +135,49 @@ func _on_currency_changed(amount: int):
 
 
 func _on_item_added(item_data: Dictionary) -> void:
+	_show_item_toast(item_data)
 	if item_slots_row.get_child_count() >= MAX_ITEM_SLOTS:
 		return
 	var slot = _create_item_slot(item_data)
 	item_slots_row.add_child(slot)
+	
+func _show_item_toast(item_data: Dictionary) -> void:
+	var name_kr = item_data.get("name_kr", "?")
+	var grade = item_data.get("grade", "D")
+	
+	var toast = Label.new()
+	toast.text = "[ %s ]을(를) 획득했습니다." % name_kr
+	toast.add_theme_font_size_override("font_size", 16)
+	toast.add_theme_color_override("font_color", Color(1, 1, 1))
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.15, 0.15, 0.18, 0.9)
+	# 등급 색상 경계선 추가
+	style.border_width_left = 3
+	style.border_color = SLOT_GRADE_COLOR.get(grade, Color(0.4, 0.4, 0.4))
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	style.content_margin_top = 12
+	style.content_margin_bottom = 12
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_right = 4
+	toast.add_theme_stylebox_override("normal", style)
+	
+	add_child(toast)
+	
+	# 대략적인 가운데 아래, 혹은 우측 하단에서 나타남
+	var viewport_size = get_viewport().get_visible_rect().size
+	# 우측 하단 시작
+	var start_pos = Vector2(viewport_size.x - 300, viewport_size.y)
+	var end_pos = Vector2(viewport_size.x - 300, viewport_size.y - 120)
+	
+	toast.global_position = start_pos
+	
+	var tween = create_tween()
+	tween.tween_property(toast, "global_position:y", end_pos.y, 0.6).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_interval(2.5)
+	tween.tween_property(toast, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(toast.queue_free)
 
 func _create_item_slot(item_data: Dictionary) -> Control:
 	var grade = item_data.get("grade", "D")

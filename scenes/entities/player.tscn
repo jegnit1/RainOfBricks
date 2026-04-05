@@ -11,7 +11,19 @@ size = Vector2(48, 32)
 [node name="Player" type="CharacterBody2D" unique_id=73003246 groups=["player"]]
 collision_layer = 2
 collision_mask = 21
+slide_on_ceiling = false
 script = ExtResource("1_ucweq")
+weapon_reach = null
+weapon_width = null
+weapon_damage = null
+weapon_attack_speed = null
+move_speed = null
+jump_velocity = null
+dig_speed = null
+luck = null
+interest_rate = null
+dig_power = null
+dig_cooldown = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1907029428]
 shape = SubResource("RectangleShape2D_08t41")

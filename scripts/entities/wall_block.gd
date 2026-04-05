@@ -3,10 +3,10 @@ extends StaticBody2D
 
 signal block_destroyed(block: Node)
 
-const BLOCK_SIZE: float = 30.0
+const BLOCK_SIZE: float = 32.0
 
-var max_hp: int = 60
-var current_hp: int = 60
+var max_hp: int = 120
+var current_hp: int = 120
 var block_color: Color = Color(0.4, 0.4, 0.4)
 var block_id: String = "wall_basic"
 var treasure_chance: float = 0.1
@@ -24,7 +24,7 @@ func _ready():
 
 func setup(data: Dictionary, pos: Vector2, treasure_data: Dictionary = {}):
 	block_id = data.get("id", "wall_basic")
-	max_hp = data.get("hp", 60)
+	max_hp = data.get("hp", 120)
 	current_hp = max_hp
 	var c = data.get("color", [0.4, 0.4, 0.4])
 	block_color = Color(c[0], c[1], c[2])
@@ -70,15 +70,21 @@ func take_dig(dig_power: int):
 func _update_crack():
 	var ratio = float(current_hp) / float(max_hp)
 
-	if ratio > 0.66:
+	if ratio > 0.8:
 		# 균열 없음
 		crack_visual.color = Color(0, 0, 0, 0)
-	elif ratio > 0.33:
+	elif ratio > 0.6:
 		# 1단계 균열
-		_draw_cracks(1, 0.35)
-	else:
+		_draw_cracks(1, 0.25)
+	elif ratio > 0.4:
 		# 2단계 균열
-		_draw_cracks(2, 0.6)
+		_draw_cracks(2, 0.5)
+	elif ratio > 0.2:
+		# 3단계 균열
+		_draw_cracks(3, 0.75)
+	else:
+		# 4단계 균열
+		_draw_cracks(4, 0.9)
 
 func _draw_cracks(stage: int, alpha: float):
 	block_visual.color = Color(
@@ -103,6 +109,16 @@ func _draw_cracks(stage: int, alpha: float):
 		# 2단계: 추가 균열선 2개
 		_add_crack_line([Vector2(-half + 2, 2), Vector2(half - 4, -3)], alpha)
 		_add_crack_line([Vector2(-3, -half + 4), Vector2(2, half - 2)], alpha)
+		
+	if stage >= 3:
+		# 3단계: 갈라짐 강조 2개
+		_add_crack_line([Vector2(2, 4), Vector2(half - 2, half - 2)], alpha)
+		_add_crack_line([Vector2(-3, 2), Vector2(-half + 2, half - 5)], alpha)
+		
+	if stage >= 4:
+		# 4단계: 파괴 직전 균열
+		_add_crack_line([Vector2(0, -half + 2), Vector2(0, half - 2)], alpha)
+		_add_crack_line([Vector2(-half + 2, 0), Vector2(half - 2, 0)], alpha)
 	
 func _add_crack_line(points: Array, alpha: float):
 	var line = Line2D.new()

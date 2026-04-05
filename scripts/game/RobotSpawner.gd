@@ -22,6 +22,8 @@ func _process(delta: float):
 		return
 	if get_tree().paused:
 		return
+	if StageManager.is_spawn_complete():
+		return
 
 	# 로봇 비활성화 스테이지
 	var robot_enabled = StageManager.current_stage_data.get("robot_enabled", false)

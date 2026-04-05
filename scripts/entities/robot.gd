@@ -72,12 +72,11 @@ func _power_off():
 	is_powered = false
 	is_patrolling = false
 	velocity = Vector2.ZERO
-	poly.color = Color(0.4, 0.4, 0.4)  # 회색 (전원 OFF)
+	poly.color = Color(0.4, 0.4, 0.4)
 	damage_timer.stop()
 	
-	# collision_layer를 monster → brick으로 변경
-	collision_layer = 4   # brick (3번 = 4)
-	collision_mask = 1 | 4 | 16
+	collision_layer = 4        # brick 레이어 (무게 누적용)
+	collision_mask = 1 | 16   # world + wall만 (brick 제외)
 	
 	if is_grounded:
 		GameManager.add_weight(weight)
@@ -200,6 +199,17 @@ func _on_damage_tick():
 
 func take_damage(amount: int):
 	hp -= amount
+	
+	# 데미지 텍스트 생성
+	var dmg_script = preload("res://scripts/ui/damage_text.gd")
+	var dmg_node = Node2D.new()
+	dmg_node.set_script(dmg_script)
+	dmg_node.amount = amount
+	dmg_node.is_critical = false
+	dmg_node.global_position = global_position + Vector2(0, -30)
+	var scene = get_tree().current_scene
+	if scene: scene.add_child(dmg_node)
+	
 	if hp <= 0:
 		_destroy()
 

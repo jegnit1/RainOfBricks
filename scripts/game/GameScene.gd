@@ -17,17 +17,38 @@ var crack_polygons: Array = []
 var kiosk_instance: Node = null
 var door_instance: Node = null
 
+var status_panel_instance: Node = null
+
 func _ready():
 	original_position = position
 	GameManager.weight_stage_changed.connect(_on_weight_stage_changed)
 	GameManager.game_over_started.connect(_on_game_over_started)
 	StageManager.stage_cleared.connect(_on_stage_cleared)
 	StageManager.start_stage(1)
+	
+	var sp_script = preload("res://scripts/ui/status_panel.gd")
+	status_panel_instance = CanvasLayer.new()
+	status_panel_instance.set_script(sp_script)
+	status_panel_instance.name = "StatusPanel"
+	add_child(status_panel_instance)
+	
 	_play_intro_zoom()
 
 func _process(delta: float):
 	_handle_shake()
 	
+func _unhandled_input(event: InputEvent) -> void:
+	# 디버그용 치트
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F1:
+			GameManager.currency += 1000
+			GameManager.currency_changed.emit(GameManager.currency)
+			print("[CHEAT] Gold +1000")
+		elif event.keycode == KEY_F2:
+			print("[CHEAT] Trigger Stage Cleared (Spawn Complete)")
+			StageManager.spawned_bricks = StageManager.total_bricks
+			StageManager.stage_cleared.emit()
+
 func _play_intro_zoom():
 	get_tree().paused = true
 
@@ -208,6 +229,10 @@ func _transition_to_next_stage():
 func _setup_next_stage():
 	# 이자 지급 (다음 스테이지 시작 직전)
 	_apply_interest()
+	
+	var shop = get_node_or_null("ShopPanel")
+	if shop and shop.has_method("reset_shop"):
+		shop.reset_shop()
 
 	# 키오스크, 문 제거
 	if kiosk_instance and is_instance_valid(kiosk_instance):
@@ -219,6 +244,8 @@ func _setup_next_stage():
 	for node in get_children():
 		if node.is_in_group("brick"):
 			node.queue_free()
+			
+	$Map.regenerate_walls()
 
 	# 무게 초기화
 	GameManager.current_weight = 0.0

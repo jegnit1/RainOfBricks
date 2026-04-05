@@ -9,9 +9,9 @@
 [ext_resource type="Script" uid="uid://cdgiawkvbmfba" path="res://scripts/game/BrickSpawner.gd" id="4_vaave"]
 [ext_resource type="PackedScene" uid="uid://lsa5oudexgpx" path="res://scenes/entities/brick.tscn" id="5_gs0nk"]
 [ext_resource type="PackedScene" uid="uid://b3i3det3jy6vf" path="res://scenes/ui/level_up_panel.tscn" id="7_ks7xl"]
-[ext_resource type="PackedScene" path="res://scenes/ui/shop_panel.tscn" id="10_shoppanel"]
 [ext_resource type="Script" uid="uid://c8jia42ksgant" path="res://scripts/game/RobotSpawner.gd" id="8_8cups"]
 [ext_resource type="PackedScene" uid="uid://chnhp3wh7m4lq" path="res://scenes/entities/robot.tscn" id="9_fjeox"]
+[ext_resource type="PackedScene" path="res://scenes/ui/shop_panel.tscn" id="10_shoppanel"]
 
 [node name="GameScene" type="Node2D" unique_id=814715480]
 script = ExtResource("1_b1len")
@@ -39,7 +39,7 @@ brick_scene = ExtResource("5_gs0nk")
 
 [node name="LevelUpPanel" parent="." unique_id=747131199 instance=ExtResource("7_ks7xl")]
 
-[node name="ShopPanel" parent="." instance=ExtResource("10_shoppanel")]
+[node name="ShopPanel" parent="." unique_id=825095020 instance=ExtResource("10_shoppanel")]
 
 [node name="RobotSpawner" type="Node2D" parent="." unique_id=701071062]
 script = ExtResource("8_8cups")

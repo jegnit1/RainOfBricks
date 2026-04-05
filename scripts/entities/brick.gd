@@ -32,6 +32,17 @@ func _on_body_entered(body: Node):
 
 func take_damage(amount: int):
 	hp -= amount
+	
+	# 데미지 텍스트 생성
+	var dmg_script = preload("res://scripts/ui/damage_text.gd")
+	var dmg_node = Node2D.new()
+	dmg_node.set_script(dmg_script)
+	dmg_node.amount = amount
+	dmg_node.is_critical = false
+	dmg_node.global_position = global_position
+	var scene = get_tree().current_scene
+	if scene: scene.add_child(dmg_node)
+	
 	if hp <= 0:
 		_destroy()
 

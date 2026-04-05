@@ -22,28 +22,78 @@ const GRADE_COLOR: Dictionary = {
 
 # ── 내부 상태 ────────────────────────────────────
 var _shop_items: Array = []       # 현재 진열 아이템
+var _reroll_count: int = 0
+var reroll_button: Button = null
+
+var status_panel_instance: Node = null
+@onready var root_panel: PanelContainer = $UIRoot/PanelContainer
+@onready var top_bar: HBoxContainer = $UIRoot/PanelContainer/VBox/TopBar
 
 # ── 초기화 ───────────────────────────────────────
 func _ready() -> void:
 	visible = false
 	close_button.pressed.connect(_on_close_pressed)
 	GameManager.currency_changed.connect(_refresh_currency_label)
+	
+	# 상점 UI를 중앙에서 화면 좌측으로 살짝 이동시키며 width를 920 픽셀로 구성하여 겹침 방지 (해상도 1280 기준 우측 320px 공간 확보)
+	root_panel.offset_left = -600
+	root_panel.offset_right = 320
+	
+	reroll_button = Button.new()
+	reroll_button.text = "새로고침 (💰 10)"
+	reroll_button.pressed.connect(_on_reroll_pressed)
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.15, 0.35, 0.6)
+	sb.content_margin_left = 14
+	sb.content_margin_right = 14
+	sb.corner_radius_top_left = 4
+	sb.corner_radius_top_right = 4
+	sb.corner_radius_bottom_left = 4
+	sb.corner_radius_bottom_right = 4
+	reroll_button.add_theme_stylebox_override("normal", sb)
+	top_bar.add_child(reroll_button)
+	top_bar.move_child(reroll_button, 1)
+	
+	var sp_script = preload("res://scripts/ui/status_panel.gd")
+	status_panel_instance = CanvasLayer.new()
+	status_panel_instance.set_script(sp_script)
+	add_child(status_panel_instance)
 
 # ── 외부 호출: 상점 열기 ─────────────────────────
 func open_shop() -> void:
-	_shop_items = _pick_shop_items(4)
+	if _shop_items.is_empty():
+		_shop_items = _pick_shop_items(4)
 	_build_item_cards()
 	_refresh_currency_label(GameManager.currency)
+	status_panel_instance.set_open(true)
 	visible = true
 	get_tree().paused = true
 
+func reset_shop() -> void:
+	_shop_items.clear()
+	_reroll_count = 0
+
+func get_reroll_cost() -> int:
+	return int(10 * pow(2, _reroll_count))
+
+func _on_reroll_pressed() -> void:
+	var cost = get_reroll_cost()
+	if GameManager.currency >= cost:
+		GameManager.currency -= cost
+		GameManager.currency_changed.emit(GameManager.currency)
+		_reroll_count += 1
+		_shop_items = _pick_shop_items(4)
+		_build_item_cards()
+		_refresh_currency_label(GameManager.currency)
+
 # ── 상점 닫기 ────────────────────────────────────
 func _on_close_pressed() -> void:
+	status_panel_instance.set_open(false)
 	visible = false
 	get_tree().paused = false
 
 func _input(event: InputEvent) -> void:
-	if visible and event.is_action_just_pressed("action"):
+	if visible and event.is_action_pressed("action") and not event.is_echo():
 		_on_close_pressed()
 		get_viewport().set_input_as_handled()
 
@@ -180,10 +230,18 @@ func _on_buy_pressed(item: Dictionary, price: int, card: Control) -> void:
 	card.queue_free()
 	_refresh_currency_label(GameManager.currency)
 	_refresh_buy_buttons()
+	
+	# 즉시 스탯창을 갱신 (상시 반영)
+	if status_panel_instance and status_panel_instance.is_open:
+		status_panel_instance._refresh_stats()
 
 # ── UI 갱신 헬퍼 ──────────────────────────────────
 func _refresh_currency_label(_amount: int = -1) -> void:
 	currency_label.text = "💰 %d" % GameManager.currency
+	if reroll_button:
+		var cost = get_reroll_cost()
+		reroll_button.text = "새로고침 (💰 %d)" % cost
+		reroll_button.disabled = (GameManager.currency < cost)
 
 func _refresh_buy_buttons() -> void:
 	for card in item_list.get_children():
