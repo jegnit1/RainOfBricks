@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://y8pvd1t1eej1" path="res://scripts/game/Map.gd" id="1_3fewy"]
 [ext_resource type="PackedScene" uid="uid://hevmvqjl0gjh" path="res://scenes/entities/wall_block.tscn" id="2_fodlk"]
+[ext_resource type="PackedScene" uid="uid://bq3q27d1fcku8" path="res://scenes/entities/treasure_chest.tscn" id="3_043wi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_07slu"]
 
@@ -12,6 +13,7 @@
 [node name="Map" type="Node2D" unique_id=372877564]
 script = ExtResource("1_3fewy")
 wall_block_scene = ExtResource("2_fodlk")
+treasure_scene = ExtResource("3_043wi")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1360279086 groups=["ground"]]
 unique_name_in_owner = true

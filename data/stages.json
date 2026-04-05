@@ -1,0 +1,31 @@
+{
+  "stages": [
+	{
+	  "stage": 1,
+	  "max_weight": 100,
+	  "brick_count": 20,
+	  "brick_spawn_interval": 2.0,
+	  "brick_hp": 30,
+	  "robot_enabled": false,
+	  "robot_spawn_interval": 999
+	},
+	{
+	  "stage": 2,
+	  "max_weight": 120,
+	  "brick_count": 25,
+	  "brick_spawn_interval": 1.5,
+	  "brick_hp": 40,
+	  "robot_enabled": true,
+	  "robot_spawn_interval": 15.0
+	},
+	{
+	  "stage": 3,
+	  "max_weight": 150,
+	  "brick_count": 30,
+	  "brick_spawn_interval": 1.2,
+	  "brick_hp": 50,
+	  "robot_enabled": true,
+	  "robot_spawn_interval": 12.0
+	}
+  ]
+}

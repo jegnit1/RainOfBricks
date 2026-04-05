@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dgjtby75e2egs"]
+
+[ext_resource type="Script" uid="uid://b8m82lsvlax3v" path="res://scripts/entities/Key.gd" id="1_vjd5i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1qhmp"]
+
+[node name="Key" type="Area2D" unique_id=738760045]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_vjd5i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=940923452]
+shape = SubResource("RectangleShape2D_1qhmp")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1970807126]

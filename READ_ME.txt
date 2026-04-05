@@ -1,0 +1,1 @@
+python -m sqlite_utils rows RainOfBricks_ItemDB.db view_items --json-cols > items.json

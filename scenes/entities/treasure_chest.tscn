@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bq3q27d1fcku8"]
+
+[ext_resource type="Script" uid="uid://bacehwnydmpvn" path="res://scripts/entities/treasure_chest.gd" id="1_pkt0a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am7mm"]
+size = Vector2(24, 24)
+
+[node name="TreasureChest" type="Area2D" unique_id=1985486567]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_pkt0a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1772945745]
+shape = SubResource("RectangleShape2D_am7mm")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1457680057]

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://xvekwagnvfd1"]
+
+[ext_resource type="Script" uid="uid://c0t5yaiketrw1" path="res://scripts/entities/stage_door.gd" id="1_abcgn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_itdww"]
+size = Vector2(40, 80)
+
+[node name="StageDoor" type="Area2D" unique_id=1585011352]
+process_mode = 3
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_abcgn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=922969839]
+process_mode = 3
+shape = SubResource("RectangleShape2D_itdww")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=984196639]

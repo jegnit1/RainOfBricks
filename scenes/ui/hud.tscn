@@ -124,4 +124,13 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="ItemSlotsRow" type="HBoxContainer" parent="UIRoot" unique_id=392847561]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 40.0
+offset_top = 85.0
+offset_right = 680.0
+offset_bottom = 125.0
+theme_override_constants/separation = 4
+
 [connection signal="pressed" from="UIRoot/GameOverPanel/RestartButton" to="." method="_on_restart_button_pressed"]

@@ -88,6 +88,10 @@ func _physics_process(delta: float):
 		if not is_on_floor():
 			velocity.y += GRAVITY * delta
 		move_and_slide()
+		# 전원 OFF 상태로 낙하 중 처음 착지한 경우 무게 추가
+		if not is_grounded and is_on_floor():
+			is_grounded = true
+			GameManager.add_weight(weight)
 		return
 
 	if GameManager.is_game_over:
@@ -208,5 +212,12 @@ func _destroy():
 	# 착지 상태에서 파괴 시 무게 제거
 	if is_grounded and not is_powered:
 		GameManager.remove_weight(weight)
+
+	# 아이템 드롭 판정
+	var players = get_tree().get_nodes_in_group("player")
+	var luck = players[0].luck if not players.is_empty() else 0
+	var drop = ItemManager.roll_drop("ROBOT_DROP", luck)
+	if not drop.is_empty():
+		ItemManager.add_item(drop)
 
 	queue_free()

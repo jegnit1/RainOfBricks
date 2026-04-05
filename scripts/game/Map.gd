@@ -5,6 +5,8 @@ extends Node2D
 @export var map_height: float = 720.0
 @export var wall_thickness: float = 300.0  # 벽 두께 대폭 확장
 @export var wall_block_scene: PackedScene
+@export var treasure_scene: PackedScene
+@export var max_treasures_per_side: int = 6  # 한쪽 벽 최대 보물상자 수
 
 const BLOCK_SIZE: float = 30.0
 
@@ -19,6 +21,7 @@ var wall_blocks: Dictionary = {}
 @onready var floor_body: StaticBody2D = $Floor
 @onready var wall_left: StaticBody2D = $WallLeft
 @onready var wall_right: StaticBody2D = $WallRight
+
 
 func _ready():
 	_build_map()
@@ -93,49 +96,71 @@ func _load_wall_data():
 		wall_block_data = data["blocks"]
 
 func _generate_wall_blocks():
-	# 바닥 위까지만 블록 생성
-	var rows = ceili(floor_y / BLOCK_SIZE)  # map_height 대신 floor_y 사용
-	print("floor_y:", floor_y, " rows:", rows)
-	print("wall_left_x:", wall_left_x, " wall_right_x:", wall_right_x)
-	print("left_cols:", int(wall_thickness / BLOCK_SIZE))
-	print("right_start_col:", int(wall_right_x / BLOCK_SIZE), " right_end_col:", int(map_width / BLOCK_SIZE))
+	var rows = ceili(floor_y / BLOCK_SIZE)
 	var left_cols = int(wall_thickness / BLOCK_SIZE)
 	var right_start_col = int(wall_right_x / BLOCK_SIZE)
 	var right_end_col = int(map_width / BLOCK_SIZE)
 
+	# 왼쪽 벽 보물상자 위치 미리 결정
+	var left_treasure_positions = _pick_treasure_positions(
+		0, left_cols, 0, rows
+	)
+	# 오른쪽 벽 보물상자 위치 미리 결정
+	var right_treasure_positions = _pick_treasure_positions(
+		right_start_col, right_end_col, 0, rows
+	)
+
 	for col in range(left_cols):
 		for row in range(rows):
-			_place_block(col, row)
+			var block_bottom = (row + 1) * BLOCK_SIZE
+			if block_bottom > floor_y:
+				continue
+			var key = Vector2i(col, row)
+			var has_treasure = left_treasure_positions.has(key)
+			var grade = left_treasure_positions.get(key, "")
+			_place_block(col, row, has_treasure, grade)
 
 	for col in range(right_start_col, right_end_col):
 		for row in range(rows):
-			_place_block(col, row)
+			var block_bottom = (row + 1) * BLOCK_SIZE
+			if block_bottom > floor_y:
+				continue
+			var key = Vector2i(col, row)
+			var has_treasure = right_treasure_positions.has(key)
+			var grade = right_treasure_positions.get(key, "")
+			_place_block(col, row, has_treasure, grade)
 
-func _place_block(col: int, row: int):
-	var block_bottom = (row + 1) * BLOCK_SIZE
-	if block_bottom > floor_y:
-		return
-
+func _place_block(col: int, row: int, has_treasure: bool = false, treasure_grade: String = ""):
 	var block = wall_block_scene.instantiate()
 	add_child(block)
 
-	var height_ratio = 1.0 - (float(row) / (map_height / BLOCK_SIZE))
-	var treasure_data = _roll_treasure(height_ratio)
 	var data = wall_block_data[0]
-
-	# 블록 위치: col/row × BLOCK_SIZE
 	var pos = Vector2(
 		col * BLOCK_SIZE + BLOCK_SIZE / 2.0,
 		row * BLOCK_SIZE + BLOCK_SIZE / 2.0
 	)
+
+	var treasure_data = {}
+	if has_treasure:
+		treasure_data = { "grade": treasure_grade }
+
 	block.setup(data, pos, treasure_data)
 
 	var key = Vector2i(col, row)
 	wall_blocks[key] = block
 
 	var captured_key = key
+	var captured_grade = treasure_grade
+	var captured_has_treasure = has_treasure
+	var captured_pos = pos
+
 	block.block_destroyed.connect(func(b):
 		wall_blocks.erase(captured_key)
+		# 보물상자 드랍
+		if captured_has_treasure and treasure_scene != null:
+			var chest = treasure_scene.instantiate()
+			get_parent().add_child(chest)
+			chest.setup(captured_grade, captured_pos)
 	)
 
 func _roll_treasure(height_ratio: float) -> Dictionary:
@@ -180,3 +205,38 @@ func dig_block_at(world_pos: Vector2, dig_power: int):
 	block.take_dig(dig_power)
 	if not is_instance_valid(block):
 		wall_blocks.erase(key)
+		
+func _pick_treasure_positions(col_start: int, col_end: int, row_start: int, row_end: int) -> Dictionary:
+	var result = Dictionary()
+	var total_rows = row_end - row_start
+	var total_cols = col_end - col_start
+
+	# 전체 후보 위치 생성
+	var candidates = []
+	for col in range(col_start, col_end):
+		for row in range(row_start, row_end):
+			var block_bottom = (row + 1) * BLOCK_SIZE
+			if block_bottom <= floor_y:
+				candidates.append(Vector2i(col, row))
+
+	# 랜덤 셔플 후 max_treasures_per_side개 선택
+	candidates.shuffle()
+	var count = min(max_treasures_per_side, candidates.size())
+
+	for i in range(count):
+		var pos = candidates[i]
+		# 높이 비율로 등급 결정
+		var height_ratio = 1.0 - (float(pos.y) / float(total_rows))
+		result[pos] = _determine_grade(height_ratio)
+
+	return result
+	
+func _determine_grade(height_ratio: float) -> String:
+	if height_ratio > 0.8:
+		return "diamond"
+	elif height_ratio > 0.6:
+		return "gold"
+	elif height_ratio > 0.3:
+		return "silver"
+	else:
+		return "bronze"

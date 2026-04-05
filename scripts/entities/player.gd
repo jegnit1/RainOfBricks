@@ -1,7 +1,6 @@
 # Player.gd
 extends CharacterBody2D
 
-const MOVE_SPEED: float = 200.0
 const JUMP_VELOCITY: float = -400.0
 const GRAVITY: float = 980.0
 
@@ -33,10 +32,20 @@ var attack_timer: float = 0.0
 var effect_timer: float = 0.0
 const EFFECT_DURATION: float = 0.1
 
-const MAX_HP: float = 100.0
+var max_hp: float = 100.0
 var current_hp: float = 100.0
+var hp_regen: float = 0.0          # 초당 체력 회복량 (아이템으로 증가)
 var invincible_timer: float = 0.0  # 무적 시간 (피해 중복 방지)
 const INVINCIBLE_DURATION: float = 0.3
+
+# ── ItemManager 연동 스탯 변수 ──────────────────────
+var gold_gain_mult: float = 1.0      # 전체 재화 획득 배율
+var robot_gold_mult: float = 1.0     # 로봇 처치 재화 배율
+var mine_gold_mult: float = 1.0      # 채굴 재화 배율
+var kiosk_price_mult: float = 1.0    # 상점 가격 배율 (1.0 = 기본, <1.0 = 할인)
+var fall_dmg_reduction: float = 0.0  # 낙하 피해 감소량
+
+@onready var _hud = get_node_or_null("/root/GameScene/HUD")
 
 func take_damage(amount: int):
 	if invincible_timer > 0:
@@ -45,9 +54,8 @@ func take_damage(amount: int):
 	invincible_timer = INVINCIBLE_DURATION
 
 	# HUD 갱신
-	var hud = get_node("/root/GameScene/HUD")
-	if hud:
-		hud.update_hp(current_hp, MAX_HP)
+	if _hud:
+		_hud.update_hp(current_hp, max_hp)
 
 	if current_hp <= 0:
 		_on_player_dead()
@@ -63,7 +71,6 @@ func _ready():
 	_setup_weapon(weapon_reach, weapon_width)
 	level_up_panel.stat_selected.connect(_on_stat_selected)
 	_setup_dig_indicator()
-	print("dig_indicator 생성됨:", dig_indicator != null)
 	
 func _setup_dig_indicator():
 	dig_indicator = Polygon2D.new()
@@ -130,8 +137,9 @@ func _physics_process(delta: float):
 	_handle_jump()
 	_update_aim()
 	_handle_attack(delta)
-	_handle_dig(delta)      # 추가
-	_handle_oxygen(delta)   # 추가
+	_handle_dig(delta)
+	_handle_oxygen(delta)
+	_handle_hp_regen(delta)
 	_handle_effect(delta)
 	move_and_slide()
 
@@ -234,6 +242,14 @@ func _do_dig():
 
 	map.dig_block_at(dig_pos, dig_power)
 		
+# 체력 회복
+func _handle_hp_regen(delta: float):
+	if hp_regen <= 0.0 or current_hp <= 0.0:
+		return
+	current_hp = min(max_hp, current_hp + hp_regen * delta)
+	if _hud:
+		_hud.update_hp(current_hp, max_hp)
+
 # 산소 시스템
 const MAX_OXYGEN: float = 100.0
 var current_oxygen: float = 100.0
@@ -252,9 +268,8 @@ func _handle_oxygen(delta: float):
 	else:
 		current_oxygen = min(MAX_OXYGEN, current_oxygen + OXYGEN_REGEN * delta)
 
-	var hud = get_node("/root/GameScene/HUD")
-	if hud:
-		hud.update_oxygen(current_oxygen, MAX_OXYGEN)
+	if _hud:
+		_hud.update_oxygen(current_oxygen, MAX_OXYGEN)
 
 func _is_inside_wall() -> bool:
 	var map = get_node("/root/GameScene/Map")

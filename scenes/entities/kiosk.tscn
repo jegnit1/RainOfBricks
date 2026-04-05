@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ofx4qleeme45"]
+
+[ext_resource type="Script" uid="uid://bbamj8ikjo6pp" path="res://scripts/entities/kiosk.gd" id="1_rj50c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_25638"]
+size = Vector2(40, 60)
+
+[node name="Kiosk" type="Area2D" unique_id=592683299]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_rj50c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1825097414]
+shape = SubResource("RectangleShape2D_25638")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=149663788]

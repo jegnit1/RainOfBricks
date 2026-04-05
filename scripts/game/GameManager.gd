@@ -125,3 +125,4 @@ func reset():
 	currency_changed.emit(currency)
 	weight_stage_changed.emit(current_weight_stage)
 	exp_changed.emit(0, _get_required_exp(2), 1)
+	ItemManager.reset()

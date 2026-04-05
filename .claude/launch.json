@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Godot - Run Game",
+      "runtimeExecutable": "C:/Users/jegnit/Desktop/Godot_v4.6.1-stable_win64.exe",
+      "runtimeArgs": ["--path", "C:/Users/jegnit/dev/rain-of-bricks"],
+      "port": 6007
+    },
+    {
+      "name": "Godot - Open Editor",
+      "runtimeExecutable": "C:/Users/jegnit/Desktop/Godot_v4.6.1-stable_win64.exe",
+      "runtimeArgs": ["-e", "--path", "C:/Users/jegnit/dev/rain-of-bricks"],
+      "port": 6007
+    },
+    {
+      "name": "DB Export (items.json)",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "sqlite_utils", "query", "RainOfBricks_ItemDB.db", "SELECT * FROM view_items", "--json-cols"],
+      "port": 0
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/jegnit/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/c8b0f15b-ad4e-4c2f-8ffe-66d3e8598618/f0675855-b157-45cb-a2bc-707e6454e451/skills/docx/**)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\jegnit\\\\Downloads\\\\RainOfBricks_DevDoc_v2 \\(1\\).docx\" unpacked/)",
+      "Bash(pip install:*)",
+      "Bash(python -c \":*)",
+      "Bash(npm --version)",
+      "Bash(npm install:*)",
+      "Bash(where godot:*)",
+      "Bash(where godot4:*)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(python -m sqlite_utils --version)",
+      "Read(//c/Users/jegnit/AppData/Local/Programs/**)",
+      "Read(//c/Users/jegnit/AppData/Local/Godot/**)",
+      "Read(//c/Users/jegnit/**)",
+      "Bash(find /c/Users/jegnit -maxdepth 5 -name Godot*.exe)",
+      "Bash(head -10 find /c/Users/jegnit -maxdepth 5 -name godot*.exe)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(head -20 echo \"---\" grep -n \"collision_layer\\\\|collision_mask\\\\|groups\\\\|script\" C:/Users/jegnit/dev/rain-of-bricks/scenes/entities/player.tscn)"
+    ]
+  }
+}

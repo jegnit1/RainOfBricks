@@ -1,22 +1,26 @@
 [gd_scene format=3 uid="uid://bd31hi35prn6j"]
 
 [ext_resource type="Script" uid="uid://b4i7fhbmaxuss" path="res://scripts/game/GameScene.gd" id="1_b1len"]
+[ext_resource type="PackedScene" uid="uid://ofx4qleeme45" path="res://scenes/entities/kiosk.tscn" id="2_am3tj"]
 [ext_resource type="PackedScene" uid="uid://dijvwd48iu6sk" path="res://scenes/entities/player.tscn" id="2_dsxmn"]
 [ext_resource type="PackedScene" uid="uid://b61fcpaprhim7" path="res://scenes/game/map.tscn" id="2_ldxrm"]
+[ext_resource type="PackedScene" uid="uid://xvekwagnvfd1" path="res://scenes/entities/stage_door.tscn" id="3_8x43h"]
 [ext_resource type="PackedScene" uid="uid://b8m2x04g4kxm4" path="res://scenes/ui/hud.tscn" id="3_ldxrm"]
 [ext_resource type="Script" uid="uid://cdgiawkvbmfba" path="res://scripts/game/BrickSpawner.gd" id="4_vaave"]
 [ext_resource type="PackedScene" uid="uid://lsa5oudexgpx" path="res://scenes/entities/brick.tscn" id="5_gs0nk"]
 [ext_resource type="PackedScene" uid="uid://b3i3det3jy6vf" path="res://scenes/ui/level_up_panel.tscn" id="7_ks7xl"]
+[ext_resource type="PackedScene" path="res://scenes/ui/shop_panel.tscn" id="10_shoppanel"]
 [ext_resource type="Script" uid="uid://c8jia42ksgant" path="res://scripts/game/RobotSpawner.gd" id="8_8cups"]
 [ext_resource type="PackedScene" uid="uid://chnhp3wh7m4lq" path="res://scenes/entities/robot.tscn" id="9_fjeox"]
 
 [node name="GameScene" type="Node2D" unique_id=814715480]
 script = ExtResource("1_b1len")
+kiosk_scene = ExtResource("2_am3tj")
+door_scene = ExtResource("3_8x43h")
 
 [node name="Map" parent="." unique_id=372877564 instance=ExtResource("2_ldxrm")]
 
 [node name="Player" parent="." unique_id=73003246 instance=ExtResource("2_dsxmn")]
-process_mode = 0
 position = Vector2(940, 620)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=877438271]
@@ -35,6 +39,19 @@ brick_scene = ExtResource("5_gs0nk")
 
 [node name="LevelUpPanel" parent="." unique_id=747131199 instance=ExtResource("7_ks7xl")]
 
+[node name="ShopPanel" parent="." instance=ExtResource("10_shoppanel")]
+
 [node name="RobotSpawner" type="Node2D" parent="." unique_id=701071062]
 script = ExtResource("8_8cups")
 robot_scene = ExtResource("9_fjeox")
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1889606210]
+
+[node name="FadeRect" type="ColorRect" parent="FadeLayer" unique_id=932563337]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)

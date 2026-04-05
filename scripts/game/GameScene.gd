@@ -3,6 +3,10 @@ extends Node2D
 
 @onready var map: Node2D = $Map
 @onready var camera: Camera2D = $Player/Camera2D
+@onready var fade_rect: ColorRect = $FadeLayer/FadeRect
+
+@export var kiosk_scene: PackedScene
+@export var door_scene: PackedScene
 
 var shake_intensity: float = 0.0
 var shake_active: bool = false
@@ -10,10 +14,15 @@ var original_position: Vector2
 
 var crack_polygons: Array = []
 
+var kiosk_instance: Node = null
+var door_instance: Node = null
+
 func _ready():
 	original_position = position
 	GameManager.weight_stage_changed.connect(_on_weight_stage_changed)
 	GameManager.game_over_started.connect(_on_game_over_started)
+	StageManager.stage_cleared.connect(_on_stage_cleared)
+	StageManager.start_stage(1)
 	_play_intro_zoom()
 
 func _process(delta: float):
@@ -154,3 +163,86 @@ func _clear_cracks():
 	for crack in crack_polygons:
 		crack.queue_free()
 	crack_polygons.clear()
+	
+func _on_stage_cleared():
+	_spawn_stage_objects()
+	
+func _spawn_stage_objects():
+	var map = $Map
+	var center_x = (map.wall_left_x + map.wall_right_x) / 2.0
+	var floor_y = map.floor_y
+
+	# 키오스크 (중앙 왼쪽)
+	if kiosk_scene:
+		kiosk_instance = kiosk_scene.instantiate()
+		kiosk_instance.position = Vector2(center_x - 100, floor_y - 40)
+		add_child(kiosk_instance)
+
+	# 문 (중앙 오른쪽)
+	if door_scene:
+		door_instance = door_scene.instantiate()
+		door_instance.position = Vector2(center_x + 100, floor_y - 50)
+		door_instance.door_entered.connect(_on_door_entered)
+		add_child(door_instance)
+
+func _on_door_entered():
+	_transition_to_next_stage()
+
+func _show_shop():
+	var shop = get_node_or_null("ShopPanel")
+	if shop:
+		shop.open_shop()
+	else:
+		_transition_to_next_stage()
+
+func _transition_to_next_stage():
+	get_tree().paused = true
+
+	var tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 0.8).set_ease(Tween.EASE_IN)
+	tween.tween_callback(func(): _setup_next_stage())
+	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.8).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(func(): get_tree().paused = false)
+
+func _setup_next_stage():
+	# 이자 지급 (다음 스테이지 시작 직전)
+	_apply_interest()
+
+	# 키오스크, 문 제거
+	if kiosk_instance and is_instance_valid(kiosk_instance):
+		kiosk_instance.queue_free()
+	if door_instance and is_instance_valid(door_instance):
+		door_instance.queue_free()
+
+	# 기존 벽돌 제거
+	for node in get_children():
+		if node.is_in_group("brick"):
+			node.queue_free()
+
+	# 무게 초기화
+	GameManager.current_weight = 0.0
+	GameManager.weight_changed.emit(0.0, GameManager.MAX_WEIGHT)
+	GameManager.current_weight_stage = "normal"
+	GameManager.weight_stage_changed.emit("normal")
+
+	# 플레이어 위치 초기화
+	var player = get_node_or_null("Player")
+	if player:
+		player.global_position = Vector2(940, 620)
+		player.velocity = Vector2.ZERO
+
+	StageManager.start_stage(StageManager.current_stage + 1)
+
+# 스테이지 클리어 시 보유 재화에 이자 적용
+func _apply_interest() -> void:
+	var player = get_node_or_null("Player")
+	if player == null:
+		return
+	# player.interest_rate에 레벨업 + ItemManager의 interest_bonus가 이미 누적됨
+	var rate: float = player.interest_rate
+	if rate <= 0.0:
+		return
+	var bonus = int(GameManager.currency * rate)
+	if bonus > 0:
+		GameManager.add_currency(bonus)
