@@ -40,4 +40,4 @@ func _spawn_brick():
 	brick.hp = brick_hp
 
 	get_parent().add_child(brick)
-	StageManager.on_brick_spawned()  # 마지막 벽돌이면 내부에서 stage_cleared 발신
+	StageManager.on_brick_spawned()

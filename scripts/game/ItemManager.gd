@@ -6,8 +6,9 @@ extends Node
 signal item_added(item_data: Dictionary)
 
 # ── 내부 데이터 ───────────────────────────────────
-var _item_db:    Array      = []   # 전체 아이템 배열 (items.json)
-var owned_items: Array      = []   # 이번 런에서 획득한 아이템 목록
+var _item_db:       Array      = []   # 전체 아이템 배열 (items.json)
+var owned_items:    Array      = []   # 이번 런에서 획득한 유물 목록
+var equipped_weapon: Dictionary = {}  # 현재 장착된 무기 (1개 슬롯)
 
 # ── 등급 드롭 가중치 기본값 ───────────────────────
 const GRADE_BASE_WEIGHT: Dictionary = {
@@ -107,9 +108,37 @@ func _weighted_pick(pool: Array, luck: int) -> Dictionary:
 func add_item(item_data: Dictionary) -> void:
 	if item_data.is_empty():
 		return
-	owned_items.append(item_data)
-	_apply_to_player(item_data)
+	if item_data.get("item_type", "relic") == "equipment":
+		_equip_weapon(item_data)
+	else:
+		owned_items.append(item_data)
+		_apply_to_player(item_data)
 	item_added.emit(item_data)
+
+# ── 무기 장착 ─────────────────────────────────────
+# 기존 무기는 교체 시 사라짐 (효과 역산 불필요 — set 모드로 덮어씀)
+func _equip_weapon(item_data: Dictionary) -> void:
+	equipped_weapon = item_data
+	var players = get_tree().get_nodes_in_group("player")
+	if players.is_empty():
+		return
+	var player = players[0]
+	for eff in item_data.get("effects", []):
+		var key:  String = eff.get("stat_key", "")
+		var val:  float  = float(eff.get("value", 0.0))
+		var mode: String = eff.get("mode", "add")
+		if mode == "set":
+			# 무기 장착 — 베이스 스탯만 갱신 (보너스는 유지)
+			match key:
+				"weapon_reach":        player.weapon_reach               = val
+				"weapon_width":        player.weapon_width               = val
+				"weapon_damage":       player.weapon_base_damage         = int(val)
+				"weapon_attack_speed": player.weapon_base_attack_speed   = val
+				"weapon_knockback":    player.weapon_base_knockback      = val
+		else:
+			_apply_effect(player, eff)
+	# 베이스 변경 후 최종 스탯 재계산
+	player._refresh_weapon_stats()
 
 func _apply_to_player(item_data: Dictionary) -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -138,15 +167,13 @@ func _apply_effect(player: Node, eff: Dictionary) -> void:
 			# jump_force +N → jump_velocity 더 음수 (높이 증가)
 			player.jump_velocity -= val
 
-		# ── 전투 ─────────────────────────────────
+		# ── 전투 (보너스 누적 → refresh) ──────────
 		"attack_speed":
-			player.weapon_attack_speed += val
-			player.equip_weapon(player.weapon_reach, player.weapon_width,
-				player.weapon_damage, player.weapon_attack_speed)
+			player.weapon_bonus_attack_speed += val
+			player._refresh_weapon_stats()
 		"attack_power_flat":
-			player.weapon_damage += int(val)
-			player.equip_weapon(player.weapon_reach, player.weapon_width,
-				player.weapon_damage, player.weapon_attack_speed)
+			player.weapon_bonus_damage += int(val)
+			player._refresh_weapon_stats()
 
 		# ── 체력 회복 ─────────────────────────────
 		"hp_regen":
@@ -202,3 +229,4 @@ func get_player_stat(stat_key: String, default_val: float = 0.0) -> float:
 # ── 리셋 (게임오버 / 재시작 시) ──────────────────
 func reset() -> void:
 	owned_items.clear()
+	equipped_weapon = {}

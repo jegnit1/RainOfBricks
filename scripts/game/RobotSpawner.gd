@@ -15,7 +15,10 @@ func _load_robot_data():
 	var file = FileAccess.open("res://data/robots.json", FileAccess.READ)
 	if file:
 		var data = JSON.parse_string(file.get_as_text())
-		robot_pool = data["robots"]
+		if data is Array:
+			robot_pool = data
+		elif data is Dictionary:
+			robot_pool = data.get("robots", [])
 
 func _process(delta: float):
 	if GameManager.is_game_over:
@@ -43,6 +46,9 @@ func _spawn_robot():
 	var robot = robot_scene.instantiate()
 	var rand_x = randf_range(spawn_area["left"] + 30, spawn_area["right"] - 30)
 	robot.position = Vector2(rand_x, -40)
-	var data = robot_pool[randi() % robot_pool.size()]
+	var data = robot_pool[randi() % robot_pool.size()].duplicate()
+	# 스테이지 HP 배율 적용
+	var hp_mult: float = StageManager.current_stage_data.get("robot_hp_mult", 1.0)
+	data["hp"] = int(data.get("hp", 50) * hp_mult)
 	get_parent().add_child(robot)
 	robot.setup(data)

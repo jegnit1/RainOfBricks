@@ -12,6 +12,9 @@ var shake_intensity: float = 0.0
 var shake_active: bool = false
 var original_position: Vector2
 
+var hit_shake_timer: float = 0.0
+var hit_shake_intensity: float = 0.0
+
 var crack_polygons: Array = []
 
 var kiosk_instance: Node = null
@@ -36,6 +39,7 @@ func _ready():
 
 func _process(delta: float):
 	_handle_shake()
+	_handle_hit_shake(delta)
 	
 func _unhandled_input(event: InputEvent) -> void:
 	# 디버그용 치트
@@ -92,6 +96,22 @@ func _stop_shake():
 	shake_active = false
 	shake_intensity = 0.0
 	position = original_position
+
+# 임시적으로 진동을 제거함
+func trigger_hit_shake(intensity: float = 0.0, duration: float = 0.08):
+	hit_shake_intensity = intensity
+	hit_shake_timer = duration
+
+func _handle_hit_shake(delta: float):
+	if hit_shake_timer <= 0.0:
+		return
+	hit_shake_timer -= delta
+	camera.offset = Vector2(
+		randf_range(-hit_shake_intensity, hit_shake_intensity),
+		randf_range(-hit_shake_intensity, hit_shake_intensity)
+	)
+	if hit_shake_timer <= 0.0:
+		camera.offset = Vector2.ZERO
 
 func _on_weight_stage_changed(stage: String):
 	match stage:
@@ -240,9 +260,9 @@ func _setup_next_stage():
 	if door_instance and is_instance_valid(door_instance):
 		door_instance.queue_free()
 
-	# 기존 벽돌 제거
+	# 기존 벽돌 · 로봇 제거
 	for node in get_children():
-		if node.is_in_group("brick"):
+		if node.is_in_group("brick") or node.is_in_group("robot"):
 			node.queue_free()
 			
 	$Map.regenerate_walls()

@@ -18,7 +18,11 @@
       "Bash(find /c/Users/jegnit -maxdepth 5 -name Godot*.exe)",
       "Bash(head -10 find /c/Users/jegnit -maxdepth 5 -name godot*.exe)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(head -20 echo \"---\" grep -n \"collision_layer\\\\|collision_mask\\\\|groups\\\\|script\" C:/Users/jegnit/dev/rain-of-bricks/scenes/entities/player.tscn)"
+      "Bash(head -20 echo \"---\" grep -n \"collision_layer\\\\|collision_mask\\\\|groups\\\\|script\" C:/Users/jegnit/dev/rain-of-bricks/scenes/entities/player.tscn)",
+      "Bash(python -c \"import json; data=json.load\\(open\\(r''C:\\\\Users\\\\jegnit\\\\dev\\\\rain-of-bricks\\\\items.json''\\)\\); print\\(f''총 {len\\(data\\)}개''\\); [print\\(f\"\"[{i[''grade'']}] {i[''id'']} | category={i.get\\(''category'',''없음''\\)} | item_type={i.get\\(''item_type'',''없음''\\)} | sources={i.get\\(''sources'',[]\\)} | effects={len\\(i.get\\(''effects'',[]\\)\\)}\"\"\\) for i in data]\")",
+      "Bash(__NEW_LINE_58dbcf4608ba57e5__ cat:*)",
+      "Bash(\"C:\\\\Users\\\\jegnit\\\\dev\\\\rain-of-bricks\\\\assets\\\\sprites\\\\main_idle.png.import\":*)",
+      "Bash(del \"C:\\\\Users\\\\jegnit\\\\dev\\\\rain-of-bricks\\\\assets\\\\sprites\\\\Player-idle.png\" \"C:\\\\Users\\\\jegnit\\\\dev\\\\rain-of-bricks\\\\assets\\\\sprites\\\\Player-idle.png.import\" \"C:\\\\Users\\\\jegnit\\\\dev\\\\rain-of-bricks\\\\assets\\\\sprites\\\\Player-run.png\" \"C:\\\\Users\\\\jegnit\\\\dev\\\\rain-of-bricks\\\\assets\\\\sprites\\\\Player-run.png.import\")"
     ]
   }
 }

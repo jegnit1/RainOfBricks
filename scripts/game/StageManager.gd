@@ -19,7 +19,10 @@ func _load_stage_data():
 	var file = FileAccess.open("res://data/stages.json", FileAccess.READ)
 	if file:
 		var data = JSON.parse_string(file.get_as_text())
-		stage_data = data["stages"]
+		if data is Array:
+			stage_data = data
+		elif data is Dictionary:
+			stage_data = data.get("stages", [])
 
 func get_stage_data(stage_num: int) -> Dictionary:
 	for s in stage_data:

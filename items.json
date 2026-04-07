@@ -1,40 +1,880 @@
-[{"id": "choco_bar", "name_kr": "\ucd08\ucf54\ubc14", "grade": "D", "desc": "\uac74\ubb3c \uc5b4\ub518\uac00\uc5d0 \ubc29\uce58\ub41c \uac04\uc2dd. \uc720\ud1b5\uae30\ud55c\uc740 \uc774\ubbf8 \uc9c0\ub0ac\uc9c0\ub9cc \uba39\uc744 \ub9cc\ud558\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 3.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "worn_boots", "name_kr": "\ub0a1\uc740 \uc7a5\ud654", "grade": "D", "desc": "\ub204\uad70\uac00 \uae09\ud788 \ub3c4\ub9dd\uce58\uba70 \ubc84\ub9b0 \uc7a5\ud654. \ubc11\ucc3d\uc774 \ub2f3\uc558\uc9c0\ub9cc \uc5c6\ub294 \uac83\ubcf4\ub2e8 \ub0ab\ub2e4.", "effects": [{"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": 1.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "work_gloves", "name_kr": "\uc791\uc5c5\uc6a9 \uc7a5\uac11", "grade": "D", "desc": "KRONOS \uac74\uc124 \ud604\uc7a5 \ud45c\uc900 \uc9c0\uae09\ud488. \uc5b4\ub514\uc11c\ub098 \uad6c\ud560 \uc218 \uc788\ub2e4.", "effects": [{"stat_key": "attack_speed", "label_kr": "\uacf5\uaca9\uc18d\ub3c4", "value": 1.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "beginners_dumbbell", "name_kr": "\ucd08\ubcf4\uc790 \ub364\ubca8", "grade": "D", "desc": "\ub0a1\uc740 \ud53c\ud2b8\ub2c8\uc2a4 \uc13c\ud130 \uc7a5\ube44. \ubb34\uae30\ub85c \uc4f8 \uc0dd\uac01\uc740 \uc5c6\uc5c8\uc9c0\ub9cc \ud6a8\uacfc\ub294 \uc788\ub2e4.", "effects": [{"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 1.0, "mode": "add"}], "sources": ["KIOSK"]},
- {"id": "energy_jelly", "name_kr": "\uc824\ub9ac", "grade": "D", "desc": "KRONOS \ubc30\uae09 \ube44\uc0c1 \uc2dd\ud488. \ub9db\uc740 \uc5c6\uc9c0\ub9cc \ud68c\ubcf5\uc5d0\ub294 \ub3c4\uc6c0\uc774 \ub41c\ub2e4.", "effects": [{"stat_key": "hp_regen", "label_kr": "\uccb4\ub825 \uc7ac\uc0dd", "value": 2.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "gold_coin", "name_kr": "\uae08\ud654", "grade": "D", "desc": "\uc7ac\ud654\ub97c \ubaa8\uc744\uc218\ub85d \uc774\uc790\uac00 \ubd99\ub294\ub2e4. \ucd9c\ucc98\ub294 \ubd88\uba85.", "effects": [{"stat_key": "interest_bonus", "label_kr": "\uc774\uc790 \ubcf4\ub108\uc2a4", "value": 2.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "dust_mask", "name_kr": "\uba3c\uc9c0 \ub9c8\uc2a4\ud06c", "grade": "D", "desc": "\uac74\uc124 \ud604\uc7a5\uc6a9 \ubd84\uc9c4 \ub9c8\uc2a4\ud06c. \ubcbd \uc548\uc758 \uc9c8\uc18c\ub3c4 \uc5b4\ub290 \uc815\ub3c4 \uac78\ub7ec\uc900\ub2e4.", "effects": [{"stat_key": "oxygen_drain_rate", "label_kr": "\uc0b0\uc18c \uc18c\ubaa8 \uc18d\ub3c4", "value": -0.1, "mode": "multiply"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "emergency_ration", "name_kr": "\ube44\uc0c1 \uc2dd\ub7c9", "grade": "D", "desc": "KRONOS\uac00 \uac01 \uce35 \ube44\uc0c1 \ucc3d\uace0\uc5d0 \ube44\uce58\ud574\ub454 \ube44\uc0c1 \uc2dd\ub7c9. \ubd09\uc778\uc774 \uadf8\ub300\ub85c\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 5.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "rusty_hammer", "name_kr": "\ub179\uc2a8 \ub9dd\uce58", "grade": "D", "desc": "\uac74\uc124 \ud604\uc7a5 \uc720\ubb3c. \ubb34\uac81\uc9c0\ub9cc \ud55c \ubc29\uc774 \ubb35\uc9c1\ud558\ub2e4.", "effects": [{"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 2.0, "mode": "add"}, {"stat_key": "attack_speed", "label_kr": "\uacf5\uaca9\uc18d\ub3c4", "value": -1.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "hard_hat", "name_kr": "\uc548\uc804\ubaa8", "grade": "D", "desc": "KRONOS \ud45c\uc900 \uc548\uc804 \uc7a5\ube44. \uc704\uc5d0\uc11c \ubb54\uac00 \ub5a8\uc5b4\uc9c4\ub2e4\ub294 \uac78 \uc124\uacc4\uc790\ub3c4 \uc54c\uc558\ub358 \ubaa8\uc591\uc774\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 4.0, "mode": "add"}, {"stat_key": "fall_dmg_reduction", "label_kr": "\ub099\ud558\ubb3c \ud53c\ud574 \uac10\uc18c", "value": 0.1, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "scrap_circuit", "name_kr": "\ud3d0\ud68c\ub85c \ubd80\ud488", "grade": "D", "desc": "AEGIS \ub85c\ubd07\uc758 \ubd80\uc11c\uc9c4 \ud68c\ub85c \uae30\ud310. KIOSK\uc5d0\uc11c \ud604\uae08\ud654 \uac00\uce58\uac00 \uc788\ub2e4.", "effects": [{"stat_key": "gold_gain_mult", "label_kr": "\uc7ac\ud654 \ud68d\ub4dd \ubc30\uc728", "value": 0.05, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "emergency_bandage", "name_kr": "\uc751\uae09 \ubd95\ub300", "grade": "D", "desc": "\uac01 \uce35 \uc751\uae09 \ucc98\uce58\ud568\uc5d0 \ub0a8\uc544\uc788\ub358 \ubd95\ub300. \ube44\uc0c1 \uc804\ub825 \ub355\uc5d0 \uba78\uade0 \uc0c1\ud0dc\uac00 \uc720\uc9c0\ub410\ub2e4.", "effects": [{"stat_key": "hp_regen", "label_kr": "\uccb4\ub825 \uc7ac\uc0dd", "value": 3.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "steroid", "name_kr": "\uc2a4\ud14c\ub85c\uc774\ub4dc", "grade": "C", "desc": "KRONOS \ubb3c\uc790 \ucc3d\uace0\uc5d0\uc11c \ubc1c\uacac\ub41c \uc57d\ubb3c. \ubd80\uc791\uc6a9\uc740 \uac10\uc218\ud574\uc57c \ud55c\ub2e4.", "effects": [{"stat_key": "attack_speed", "label_kr": "\uacf5\uaca9\uc18d\ub3c4", "value": 5.0, "mode": "add"}, {"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": -5.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "skates", "name_kr": "\uc2a4\ucf00\uc774\ud2b8", "grade": "C", "desc": "\ud30c\uad34\ub41c \ub808\ud06c\ub9ac\uc5d0\uc774\uc158 \uad6c\uc5ed\uc5d0\uc11c \ubc1c\uacac. \ube60\ub974\uc9c0\ub9cc \ub3c4\uc57d\uc774 \uc5b4\ub835\ub2e4.", "effects": [{"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": 5.0, "mode": "add"}, {"stat_key": "jump_force", "label_kr": "\uc810\ud504\ub825", "value": -5.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "suspicious_drug", "name_kr": "\uc218\uc0c1\ud55c \uc57d\ubb3c", "grade": "C", "desc": "\ub77c\ubca8\uc774 \ubc97\uaca8\uc9c4 \ubc14\uc774\uc54c. KRONOS \uc2e4\ud5d8\uc2e4\uc5d0\uc11c \ud758\ub7ec\ub098\uc628 \uac83\uc73c\ub85c \ucd94\uc815\ub41c\ub2e4.", "effects": [{"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 5.0, "mode": "add"}, {"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": -5.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "heavy_armor", "name_kr": "\ubb34\uac70\uc6b4 \uac11\uc637", "grade": "C", "desc": "KRONOS \uacbd\ube44\uc6d0 \uc9c0\uae09 \ubc29\ud638\ubcf5. \ubc29\uc5b4\ub825\uc740 \ud0c1\uc6d4\ud558\ub098 \uae30\ub3d9\uc131\uc744 \ud76c\uc0dd\ud55c\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 10.0, "mode": "add"}, {"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": -3.0, "mode": "add"}, {"stat_key": "jump_force", "label_kr": "\uc810\ud504\ub825", "value": -3.0, "mode": "add"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "kronos_ballistic_vest", "name_kr": "KRONOS \ubc29\ud0c4\ubcf5", "grade": "C", "desc": "\uc774\uc911 \uad6c\uc870 \ub0b4\ubd80\uc5d0\uc11c \ubc1c\uacac\ub41c KRONOS \uc9c0\uae09 \uc7a5\ube44. \uc77c\ubc18 \uacbd\ube44\uc6d0\uc6a9\ubcf4\ub2e4 \ub4f1\uae09\uc774 \ub192\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 12.0, "mode": "add"}, {"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": -2.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "oxygen_tank", "name_kr": "\uc0b0\uc18c \ud0f1\ud06c", "grade": "C", "desc": "\uc9c8\uc18c \ubd09\uc778 \uad6c\uc5ed \uc804\uc6a9 \uc18c\ud615 \uc0b0\uc18c \ud0f1\ud06c. \ubcbd \uc548\uc5d0\uc11c \ubc84\ud2f8 \uc218 \uc788\ub294 \uc2dc\uac04\uc774 \ud06c\uac8c \ub298\uc5b4\ub09c\ub2e4.", "effects": [{"stat_key": "oxygen_drain_rate", "label_kr": "\uc0b0\uc18c \uc18c\ubaa8 \uc18d\ub3c4", "value": -0.4, "mode": "multiply"}], "sources": ["KIOSK", "TREASURE"]},
- {"id": "shock_boots", "name_kr": "\ucda9\uaca9 \ud761\uc218 \ubd80\uce20", "grade": "C", "desc": "KRONOS \uac74\uc124 \ud604\uc7a5 \uc548\uc804\ud654 \uc0c1\uc704 \ubaa8\ub378. \uc794\ud574\uac00 \uc3df\uc544\uc9c0\ub294 \ud658\uacbd\uc744 \uace0\ub824\ud574 \uc124\uacc4\ub410\ub2e4.", "effects": [{"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": 3.0, "mode": "add"}, {"stat_key": "fall_dmg_reduction", "label_kr": "\ub099\ud558\ubb3c \ud53c\ud574 \uac10\uc18c", "value": 0.2, "mode": "add"}], "sources": ["KIOSK"]},
- {"id": "aegis_jammer", "name_kr": "AEGIS \uc804\uc6d0 \uc7ac\uba38", "grade": "C", "desc": "AEGIS \uc720\uc9c0\ubcf4\uc218\ud300\uc774 \uc4f0\ub358 \uc7a5\ube44. \uc804\ub825 \uc2e0\ud638\ub97c \uad50\ub780\ud574 \ub85c\ubd07\uc744 \ub354 \uc624\ub798 \uba48\ucd9c \uc218 \uc788\ub2e4.", "effects": [], "sources": ["TREASURE", "ROBOT_DROP"]},
- {"id": "load_sensor_spoofer", "name_kr": "\ud558\uc911 \uac10\uc9c0\uae30 \uc2a4\ud478\ud37c", "grade": "C", "desc": "\ud558\uc911 \uc13c\uc11c\uc5d0 \ud5c8\uc704 \uc2e0\ud638\ub97c \ubcf4\ub0b4\ub294 \uc7a5\uce58. KRONOS \ubcf4\uc548\ud300\uc774 \ud14c\uc2a4\ud2b8\uc6a9\uc73c\ub85c \ub9cc\ub4e0 \uac83\uc73c\ub85c \ucd94\uc815.", "effects": [{"stat_key": "weight_limit_mult", "label_kr": "\ubb34\uac8c \ud55c\uacc4 \ubc30\uc728", "value": 0.1, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "nano_syringe", "name_kr": "\ub098\ub178 \uc8fc\uc0ac\uae30", "grade": "C", "desc": "\uc774\uc911 \uad6c\uc870 \ub0b4\ubd80\uc5d0\uc11c \ubc1c\uacac\ub41c \uc758\ub8cc\uc6a9 \ub098\ub178\uba38\uc2e0 \uc8fc\uc0ac\uae30. \ud68c\ubcf5\uc774 \ube60\ub974\uc9c0\ub9cc \uc7a5\uae30 \ud22c\uc5ec\ub294 \uc704\ud5d8\ud558\ub2e4.", "effects": [{"stat_key": "hp_regen", "label_kr": "\uccb4\ub825 \uc7ac\uc0dd", "value": 8.0, "mode": "add"}, {"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": -5.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "inspectors_pass", "name_kr": "\uc810\uac80\uad00 \ucd9c\uc785\uc99d", "grade": "C", "desc": "\uc804\uc9c1 KRONOS \uc810\uac80\uad00\uc774 \uc0ac\uc6a9\ud558\ub358 \uad6c\ud615 \ucd9c\uc785\uc99d. \uc190\uc0c1\ub41c \ubcf4\uc548 \uc11c\ubc84 \ub355\uc5d0 \uc544\uc9c1 \uc77c\ubd80 \uad8c\ud55c\uc774 \uc0b4\uc544\uc788\ub2e4.", "effects": [{"stat_key": "kiosk_price_mult", "label_kr": "KIOSK \uac00\uaca9 \ubc30\uc728", "value": -0.15, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "kronos_prototype_blade", "name_kr": "KRONOS \ud504\ub85c\ud1a0\ud0c0\uc785 \uac80", "grade": "B", "desc": "KRONOS \ubb34\uae30 \uac1c\ubc1c\ud300\uc774 \uc81c\uc791\ud55c \ud504\ub85c\ud1a0\ud0c0\uc785. \uc2e4\uc804 \ubc30\uce58 \uc804 \ucc3d\uace0\uc5d0 \ubd09\uc778\ub410\ub2e4.", "effects": [{"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 12.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "golem_muscle_enhancer", "name_kr": "GOLEM \uadfc\uc721 \uac15\ud654\uc81c", "grade": "B", "desc": "GOLEM \ud504\ub85c\uc81d\ud2b8 \ud53c\uc2e4\ud5d8\uccb4\uc5d0\uac8c \ud22c\uc5ec\ud558\ub358 \uadfc\uc721 \uc99d\uac15\uc81c. \ud6a8\uacfc\ub294 \ud655\uc2e4\ud558\ub2e4. \ubd80\uc791\uc6a9\uc740 \ubab0\ub77c\ub3c4.", "effects": [{"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 8.0, "mode": "add"}, {"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 8.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "maglev_boots", "name_kr": "\uc790\uae30\ubd80\uc0c1 \ubd80\uce20", "grade": "B", "desc": "KRONOS \ucc28\uc138\ub300 \uae30\ub3d9 \uc7a5\ube44 \ud504\ub85c\ud1a0\ud0c0\uc785. \uc790\uae30\ub825\uc73c\ub85c \uc9c0\uba74 \ubc18\ubc1c\ub825\uc744 \uadf9\ub300\ud654\ud55c\ub2e4.", "effects": [{"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": 7.0, "mode": "add"}, {"stat_key": "jump_force", "label_kr": "\uc810\ud504\ub825", "value": 7.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "flush_disruptor", "name_kr": "\ud50c\ub7ec\uc2dc \ubb34\ub825\ud654 \uc7a5\uce58", "grade": "B", "desc": "\ud558\uc911 \uac10\uc9c0 \uc13c\uc11c\uc758 \uc784\uacc4\uac12\uc744 \uc870\uc791\ud558\ub294 \uc7a5\uce58. KRONOS \ubcf4\uc548\ud300\ub3c4 \ubab0\ub790\ub358 \ubc31\ub3c4\uc5b4\ub97c \uc774\uc6a9\ud55c\ub2e4.", "effects": [{"stat_key": "weight_limit_mult", "label_kr": "\ubb34\uac8c \ud55c\uacc4 \ubc30\uc728", "value": 0.2, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "aegis_core_chip", "name_kr": "AEGIS \ucf54\uc5b4 \uce69", "grade": "B", "desc": "AEGIS \ub85c\ubd07\uc758 \ud575\uc2ec \uc5f0\uc0b0 \uce69. \uace0\uac00 \ubd80\ud488\uc774\ub77c KIOSK\uc5d0\uc11c \ub192\uc740 \uac00\uaca9\uc5d0 \ud658\uc804\ub41c\ub2e4.", "effects": [{"stat_key": "robot_gold_mult", "label_kr": "\ub85c\ubd07 \ucc98\uce58 \uc7ac\ud654 \ubc30\uc728", "value": 0.3, "mode": "add"}], "sources": ["ROBOT_DROP"]},
- {"id": "bio_reactive_suit", "name_kr": "\uc0dd\uccb4 \uac10\uc751 \uc218\ud2b8", "grade": "B", "desc": "GOLEM \ud504\ub85c\uc81d\ud2b8 \ud30c\uc0dd \uae30\uc220\ub85c \ub9cc\ub4e0 \uc804\ud22c\ubcf5. \uc704\uae30 \uc0c1\ud669\uc5d0\uc11c \ucc29\uc6a9\uc790\uc758 \uc0dd\uccb4 \ubc18\uc751\uc744 \uadf9\ub300\ud654\ud55c\ub2e4.", "effects": [], "sources": ["TREASURE"]},
- {"id": "dual_structure_blueprint", "name_kr": "\uc774\uc911 \uad6c\uc870 \uc124\uacc4\ub3c4", "grade": "B", "desc": "\ud0c0\uc6cc 07 \uc774\uc911 \uad6c\uc870\uc758 \uc6d0\ubcf8 \uc124\uacc4\ub3c4 \uc77c\ubd80. \uc5b4\ub514\ub97c \ud30c\uc57c \ubb3c\uc790\uac00 \ub9ce\uc740\uc9c0 \uc815\ud655\ud788 \uc54c \uc218 \uc788\ub2e4.", "effects": [{"stat_key": "mine_gold_mult", "label_kr": "\ubcbd \ucc44\uad74 \uc7ac\ud654 \ubc30\uc728", "value": 1.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "k00_combat_data_chip", "name_kr": "K-00 \uc804\ud22c \ub370\uc774\ud130 \uce69", "grade": "A", "desc": "K-00\uc758 \uc804\ud22c \ubc18\uc751 \ub370\uc774\ud130\uac00 \ub2f4\uae34 \uce69. \ucc29\uc6a9\uc790\uc758 \uc2e0\uacbd\uacc4\uc5d0 \uc9c1\uc811 \uc811\uc18d\ud574 \uc804\ud22c \ub2a5\ub825\uc744 \ub04c\uc5b4\uc62c\ub9b0\ub2e4.", "effects": [{"stat_key": "attack_speed", "label_kr": "\uacf5\uaca9\uc18d\ub3c4", "value": 15.0, "mode": "add"}, {"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 10.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "golem_prototype_armor", "name_kr": "GOLEM \ud504\ub85c\ud1a0\ud0c0\uc785 \uac11\uc637", "grade": "A", "desc": "GOLEM \ud53c\uc2e4\ud5d8\uccb4\uc6a9\uc73c\ub85c \uc81c\uc791\ub41c \uc678\uace8\uaca9 \uac11\uc637. \ubc29\uc5b4\ub825\uc774 \uadf9\ub3c4\ub85c \ub192\uc9c0\ub9cc \uc778\uac04\uc758 \uccb4\ud615\uc5d0 \ucd5c\uc801\ud654\ub418\uc9c0 \uc54a\uc558\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 30.0, "mode": "add"}, {"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": -5.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "nitrogen_barrier_suit", "name_kr": "\uc9c8\uc18c \ucc28\ub2e8 \uc218\ud2b8", "grade": "A", "desc": "KRONOS \uc5f0\uad6c\uc6d0\ub4e4\uc774 \uc774\uc911 \uad6c\uc870 \ub0b4\ubd80 \uc791\uc5c5 \uc2dc \ucc29\uc6a9\ud558\ub358 \ud2b9\uc218 \ubc00\ud3d0 \uc218\ud2b8.", "effects": [], "sources": ["TREASURE"]},
- {"id": "flush_override_chip", "name_kr": "\ud50c\ub7ec\uc2dc \uc624\ubc84\ub77c\uc774\ub4dc \uce69", "grade": "A", "desc": "\ud50c\ub7ec\uc2dc \ud504\ub85c\ud1a0\ucf5c\uc758 \ubc1c\ub3d9 \uc784\uacc4\uac12\uc744 \ub300\ud3ed \uc0c1\ud5a5\ud558\ub294 \uad00\ub9ac\uc790 \uad8c\ud55c \uce69.", "effects": [{"stat_key": "weight_limit_mult", "label_kr": "\ubb34\uac8c \ud55c\uacc4 \ubc30\uc728", "value": 0.4, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "kronos_all_in_one", "name_kr": "KRONOS \ub9cc\ub2a5 \uac15\ud654\uc81c", "grade": "A", "desc": "GOLEM \ud504\ub85c\uc81d\ud2b8\uc758 \ucd5c\uc885 \ub2e8\uacc4\uc6a9\uc73c\ub85c \uac1c\ubc1c\ub41c \ubcf5\ud569 \uac15\ud654\uc81c. \ubaa8\ub4e0 \ub2a5\ub825\uce58\ub97c \uade0\ud615 \uc788\uac8c \ub04c\uc5b4\uc62c\ub9b0\ub2e4.", "effects": [{"stat_key": "max_hp", "label_kr": "\ucd5c\ub300 \uccb4\ub825", "value": 10.0, "mode": "add"}, {"stat_key": "attack_power_flat", "label_kr": "\uacf5\uaca9\ub825 (\uace0\uc815)", "value": 5.0, "mode": "add"}, {"stat_key": "move_speed", "label_kr": "\uc774\ub3d9\uc18d\ub3c4", "value": 5.0, "mode": "add"}, {"stat_key": "attack_speed", "label_kr": "\uacf5\uaca9\uc18d\ub3c4", "value": 5.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "spring_boots", "name_kr": "\uc6a9\uc218\ucca0 \uc7a5\ud654", "grade": "S", "desc": "KRONOS \ub3c4\uc2dc \ud0c8\ucd9c \ud6c8\ub828 \uc7a5\ube44. \ub2e8 \ud55c \ubc88 \ub354 \ub3c4\uc57d\ud560 \uc218 \uc788\ub2e4\ub294 \uac83\uc774 \uc774 \uc0c1\ud669\uc5d0\uc11c\ub294 \uc804\ubd80\uac00 \ub420 \uc218 \uc788\ub2e4.", "effects": [], "sources": ["TREASURE"]},
- {"id": "hypersonic_gauntlet", "name_kr": "\ucd08\uc74c\uc18d \uc7a5\uac11", "grade": "S", "desc": "GOLEM \ud504\ub85c\uc81d\ud2b8\uc758 \ud30c\uc0dd \ubcd1\uae30. \ucc29\uc6a9 \ud6c4 \uacf5\uaca9 \uc18d\ub3c4\uac00 \uc778\uac04\uc758 \ud55c\uacc4\ub97c \ub118\uc5b4\uc11c\uc9c0\ub9cc, \uc2e0\uccb4 \uac15\ud654 \uc57d\ubb3c \uc5c6\uc774\ub294 \uac10\ub2f9\ud560 \uc218 \uc5c6\ub2e4.", "effects": [{"stat_key": "attack_speed", "label_kr": "\uacf5\uaca9\uc18d\ub3c4", "value": 50.0, "mode": "add"}], "sources": ["TREASURE"]},
- {"id": "golem_implant_chip", "name_kr": "GOLEM \uc774\uc2dd \uce69", "grade": "S", "desc": "K-00\uc5d0\uac8c \uc774\uc2dd\ub410\ub358 \uc0dd\uc874 \ud68c\ub85c \uce69. \ucc29\uc6a9\uc790\uac00 \uce58\uba85\uc0c1\uc744 \uc785\uc73c\uba74 \uc790\ub3d9\uc73c\ub85c \uc7ac\uae30\ub3d9 \uc2e0\ud638\ub97c \ubcf4\ub0b8\ub2e4.", "effects": [], "sources": ["TREASURE"]},
- {"id": "k00_memory", "name_kr": "K-00\uc758 \uae30\uc5b5 \uc870\uac01", "grade": "S", "desc": "K-00\uc774 \ub9c8\uc9c0\ub9c9\uc73c\ub85c \uc800\ud56d\ud588\ub358 30\ucd08\uc758 \uae30\ub85d\uc774 \ub2f4\uae34 \uc2e0\uacbd \uce69. \uadf8 \uc758\uc9c0\uac00 \ud504\ub85c\ud1a0\ucf5c\uc744 \ubc84\ud168\ub0b8\ub2e4.", "effects": [], "sources": ["TREASURE"]},
- {"id": "flush_override_code", "name_kr": "\ud50c\ub7ec\uc2dc \uc624\ubc84\ub77c\uc774\ub4dc \ucf54\ub4dc", "grade": "S", "desc": "\ud50c\ub7ec\uc2dc \ud504\ub85c\ud1a0\ucf5c \uc790\uccb4\ub97c \ubb34\ub825\ud654\ud558\ub294 \ucd5c\uc0c1\uc704 \uad00\ub9ac\uc790 \ucf54\ub4dc. KRONOS CEO\ub9cc\uc774 \uac00\uc9c4 \uad8c\ud55c\uc774\uc5c8\ub2e4. \ub300\uac00\ub294 \uc788\ub2e4.", "effects": [], "sources": ["TREASURE"]}]
+[
+  {
+    "id": "choco_bar",
+    "name_kr": "초코바",
+    "grade": "D",
+    "desc": "건물 어딘가에 방치된 간식. 유통기한은 이미 지났지만 먹을 만하다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 3.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "worn_boots",
+    "name_kr": "낡은 장화",
+    "grade": "D",
+    "desc": "누군가 급히 도망치며 버린 장화. 밑창이 닳았지만 없는 것보단 낫다.",
+    "effects": [
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": 1.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "work_gloves",
+    "name_kr": "작업용 장갑",
+    "grade": "D",
+    "desc": "KRONOS 건설 현장 표준 지급품. 어디서나 구할 수 있다.",
+    "effects": [
+      {
+        "stat_key": "attack_speed",
+        "label_kr": "공격속도",
+        "value": 1.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "beginners_dumbbell",
+    "name_kr": "초보자 덤벨",
+    "grade": "D",
+    "desc": "낡은 피트니스 센터 장비. 무기로 쓸 생각은 없었지만 효과는 있다.",
+    "effects": [
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 1.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK"
+    ]
+  },
+  {
+    "id": "energy_jelly",
+    "name_kr": "젤리",
+    "grade": "D",
+    "desc": "KRONOS 배급 비상 식품. 맛은 없지만 회복에는 도움이 된다.",
+    "effects": [
+      {
+        "stat_key": "hp_regen",
+        "label_kr": "체력 재생",
+        "value": 2.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "gold_coin",
+    "name_kr": "금화",
+    "grade": "D",
+    "desc": "재화를 모을수록 이자가 붙는다. 출처는 불명.",
+    "effects": [
+      {
+        "stat_key": "interest_bonus",
+        "label_kr": "이자 보너스",
+        "value": 2.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "dust_mask",
+    "name_kr": "먼지 마스크",
+    "grade": "D",
+    "desc": "건설 현장용 분진 마스크. 벽 안의 질소도 어느 정도 걸러준다.",
+    "effects": [
+      {
+        "stat_key": "oxygen_drain_rate",
+        "label_kr": "산소 소모 속도",
+        "value": -0.1,
+        "mode": "multiply"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "emergency_ration",
+    "name_kr": "비상 식량",
+    "grade": "D",
+    "desc": "KRONOS가 각 층 비상 창고에 비치해둔 비상 식량. 봉인이 그대로다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "rusty_hammer",
+    "name_kr": "녹슨 망치",
+    "grade": "D",
+    "desc": "건설 현장 유물. 무겁지만 한 방이 묵직하다.",
+    "effects": [
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 2.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "attack_speed",
+        "label_kr": "공격속도",
+        "value": -1.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "hard_hat",
+    "name_kr": "안전모",
+    "grade": "D",
+    "desc": "KRONOS 표준 안전 장비. 위에서 뭔가 떨어진다는 걸 설계자도 알았던 모양이다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 4.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "fall_dmg_reduction",
+        "label_kr": "낙하물 피해 감소",
+        "value": 0.1,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "scrap_circuit",
+    "name_kr": "폐회로 부품",
+    "grade": "D",
+    "desc": "AEGIS 로봇의 부서진 회로 기판. KIOSK에서 현금화 가치가 있다.",
+    "effects": [
+      {
+        "stat_key": "gold_gain_mult",
+        "label_kr": "재화 획득 배율",
+        "value": 0.05,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "emergency_bandage",
+    "name_kr": "응급 붕대",
+    "grade": "D",
+    "desc": "각 층 응급 처치함에 남아있던 붕대. 비상 전력 덕에 멸균 상태가 유지됐다.",
+    "effects": [
+      {
+        "stat_key": "hp_regen",
+        "label_kr": "체력 재생",
+        "value": 3.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "steroid",
+    "name_kr": "스테로이드",
+    "grade": "C",
+    "desc": "KRONOS 물자 창고에서 발견된 약물. 부작용은 감수해야 한다.",
+    "effects": [
+      {
+        "stat_key": "attack_speed",
+        "label_kr": "공격속도",
+        "value": 5.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": -5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "skates",
+    "name_kr": "스케이트",
+    "grade": "C",
+    "desc": "파괴된 레크리에이션 구역에서 발견. 빠르지만 도약이 어렵다.",
+    "effects": [
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": 5.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "jump_force",
+        "label_kr": "점프력",
+        "value": -5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "suspicious_drug",
+    "name_kr": "수상한 약물",
+    "grade": "C",
+    "desc": "라벨이 벗겨진 바이알. KRONOS 실험실에서 흘러나온 것으로 추정된다.",
+    "effects": [
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 5.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": -5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "heavy_armor",
+    "name_kr": "무거운 갑옷",
+    "grade": "C",
+    "desc": "KRONOS 경비원 지급 방호복. 방어력은 탁월하나 기동성을 희생한다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 10.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": -3.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "jump_force",
+        "label_kr": "점프력",
+        "value": -3.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "kronos_ballistic_vest",
+    "name_kr": "KRONOS 방탄복",
+    "grade": "C",
+    "desc": "이중 구조 내부에서 발견된 KRONOS 지급 장비. 일반 경비원용보다 등급이 높다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 12.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": -2.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "oxygen_tank",
+    "name_kr": "산소 탱크",
+    "grade": "C",
+    "desc": "질소 봉인 구역 전용 소형 산소 탱크. 벽 안에서 버틸 수 있는 시간이 크게 늘어난다.",
+    "effects": [
+      {
+        "stat_key": "oxygen_drain_rate",
+        "label_kr": "산소 소모 속도",
+        "value": -0.4,
+        "mode": "multiply"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "shock_boots",
+    "name_kr": "충격 흡수 부츠",
+    "grade": "C",
+    "desc": "KRONOS 건설 현장 안전화 상위 모델. 잔해가 쏟아지는 환경을 고려해 설계됐다.",
+    "effects": [
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": 3.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "fall_dmg_reduction",
+        "label_kr": "낙하물 피해 감소",
+        "value": 0.2,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "KIOSK"
+    ]
+  },
+  {
+    "id": "aegis_jammer",
+    "name_kr": "AEGIS 전원 재머",
+    "grade": "C",
+    "desc": "AEGIS 유지보수팀이 쓰던 장비. 전력 신호를 교란해 로봇을 더 오래 멈출 수 있다.",
+    "effects": [],
+    "sources": [
+      "TREASURE",
+      "ROBOT_DROP"
+    ]
+  },
+  {
+    "id": "load_sensor_spoofer",
+    "name_kr": "하중 감지기 스푸퍼",
+    "grade": "C",
+    "desc": "하중 센서에 허위 신호를 보내는 장치. KRONOS 보안팀이 테스트용으로 만든 것으로 추정.",
+    "effects": [
+      {
+        "stat_key": "weight_limit_mult",
+        "label_kr": "무게 한계 배율",
+        "value": 0.1,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "nano_syringe",
+    "name_kr": "나노 주사기",
+    "grade": "C",
+    "desc": "이중 구조 내부에서 발견된 의료용 나노머신 주사기. 회복이 빠르지만 장기 투여는 위험하다.",
+    "effects": [
+      {
+        "stat_key": "hp_regen",
+        "label_kr": "체력 재생",
+        "value": 8.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": -5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "inspectors_pass",
+    "name_kr": "점검관 출입증",
+    "grade": "C",
+    "desc": "전직 KRONOS 점검관이 사용하던 구형 출입증. 손상된 보안 서버 덕에 아직 일부 권한이 살아있다.",
+    "effects": [
+      {
+        "stat_key": "kiosk_price_mult",
+        "label_kr": "KIOSK 가격 배율",
+        "value": -0.15,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "kronos_prototype_blade",
+    "name_kr": "KRONOS 프로토타입 검",
+    "grade": "B",
+    "desc": "KRONOS 무기 개발팀이 제작한 프로토타입. 실전 배치 전 창고에 봉인됐다.",
+    "effects": [
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 12.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "golem_muscle_enhancer",
+    "name_kr": "GOLEM 근육 강화제",
+    "grade": "B",
+    "desc": "GOLEM 프로젝트 피실험체에게 투여하던 근육 증강제. 효과는 확실하다. 부작용은 몰라도.",
+    "effects": [
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 8.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 8.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "maglev_boots",
+    "name_kr": "자기부상 부츠",
+    "grade": "B",
+    "desc": "KRONOS 차세대 기동 장비 프로토타입. 자기력으로 지면 반발력을 극대화한다.",
+    "effects": [
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": 7.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "jump_force",
+        "label_kr": "점프력",
+        "value": 7.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "flush_disruptor",
+    "name_kr": "플러시 무력화 장치",
+    "grade": "B",
+    "desc": "하중 감지 센서의 임계값을 조작하는 장치. KRONOS 보안팀도 몰랐던 백도어를 이용한다.",
+    "effects": [
+      {
+        "stat_key": "weight_limit_mult",
+        "label_kr": "무게 한계 배율",
+        "value": 0.2,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "aegis_core_chip",
+    "name_kr": "AEGIS 코어 칩",
+    "grade": "B",
+    "desc": "AEGIS 로봇의 핵심 연산 칩. 고가 부품이라 KIOSK에서 높은 가격에 환전된다.",
+    "effects": [
+      {
+        "stat_key": "robot_gold_mult",
+        "label_kr": "로봇 처치 재화 배율",
+        "value": 0.3,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "ROBOT_DROP"
+    ]
+  },
+  {
+    "id": "bio_reactive_suit",
+    "name_kr": "생체 감응 수트",
+    "grade": "B",
+    "desc": "GOLEM 프로젝트 파생 기술로 만든 전투복. 위기 상황에서 착용자의 생체 반응을 극대화한다.",
+    "effects": [],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "dual_structure_blueprint",
+    "name_kr": "이중 구조 설계도",
+    "grade": "B",
+    "desc": "타워 07 이중 구조의 원본 설계도 일부. 어디를 파야 물자가 많은지 정확히 알 수 있다.",
+    "effects": [
+      {
+        "stat_key": "mine_gold_mult",
+        "label_kr": "벽 채굴 재화 배율",
+        "value": 1.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "k00_combat_data_chip",
+    "name_kr": "K-00 전투 데이터 칩",
+    "grade": "A",
+    "desc": "K-00의 전투 반응 데이터가 담긴 칩. 착용자의 신경계에 직접 접속해 전투 능력을 끌어올린다.",
+    "effects": [
+      {
+        "stat_key": "attack_speed",
+        "label_kr": "공격속도",
+        "value": 15.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 10.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "golem_prototype_armor",
+    "name_kr": "GOLEM 프로토타입 갑옷",
+    "grade": "A",
+    "desc": "GOLEM 피실험체용으로 제작된 외골격 갑옷. 방어력이 극도로 높지만 인간의 체형에 최적화되지 않았다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 30.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": -5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "nitrogen_barrier_suit",
+    "name_kr": "질소 차단 수트",
+    "grade": "A",
+    "desc": "KRONOS 연구원들이 이중 구조 내부 작업 시 착용하던 특수 밀폐 수트.",
+    "effects": [],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "flush_override_chip",
+    "name_kr": "플러시 오버라이드 칩",
+    "grade": "A",
+    "desc": "플러시 프로토콜의 발동 임계값을 대폭 상향하는 관리자 권한 칩.",
+    "effects": [
+      {
+        "stat_key": "weight_limit_mult",
+        "label_kr": "무게 한계 배율",
+        "value": 0.4,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "kronos_all_in_one",
+    "name_kr": "KRONOS 만능 강화제",
+    "grade": "A",
+    "desc": "GOLEM 프로젝트의 최종 단계용으로 개발된 복합 강화제. 모든 능력치를 균형 있게 끌어올린다.",
+    "effects": [
+      {
+        "stat_key": "max_hp",
+        "label_kr": "최대 체력",
+        "value": 10.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "attack_power_flat",
+        "label_kr": "공격력 (고정)",
+        "value": 5.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "move_speed",
+        "label_kr": "이동속도",
+        "value": 5.0,
+        "mode": "add"
+      },
+      {
+        "stat_key": "attack_speed",
+        "label_kr": "공격속도",
+        "value": 5.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "spring_boots",
+    "name_kr": "용수철 장화",
+    "grade": "S",
+    "desc": "KRONOS 도시 탈출 훈련 장비. 단 한 번 더 도약할 수 있다는 것이 이 상황에서는 전부가 될 수 있다.",
+    "effects": [],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "hypersonic_gauntlet",
+    "name_kr": "초음속 장갑",
+    "grade": "S",
+    "desc": "GOLEM 프로젝트의 파생 병기. 착용 후 공격 속도가 인간의 한계를 넘어서지만, 신체 강화 약물 없이는 감당할 수 없다.",
+    "effects": [
+      {
+        "stat_key": "attack_speed",
+        "label_kr": "공격속도",
+        "value": 50.0,
+        "mode": "add"
+      }
+    ],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "golem_implant_chip",
+    "name_kr": "GOLEM 이식 칩",
+    "grade": "S",
+    "desc": "K-00에게 이식됐던 생존 회로 칩. 착용자가 치명상을 입으면 자동으로 재기동 신호를 보낸다.",
+    "effects": [],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "k00_memory",
+    "name_kr": "K-00의 기억 조각",
+    "grade": "S",
+    "desc": "K-00이 마지막으로 저항했던 30초의 기록이 담긴 신경 칩. 그 의지가 프로토콜을 버텨낸다.",
+    "effects": [],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "flush_override_code",
+    "name_kr": "플러시 오버라이드 코드",
+    "grade": "S",
+    "desc": "플러시 프로토콜 자체를 무력화하는 최상위 관리자 코드. KRONOS CEO만이 가진 권한이었다. 대가는 있다.",
+    "effects": [],
+    "sources": [
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "test_one_handed_hammer",
+    "name_kr": "한손 망치",
+    "grade": "D",
+    "item_type": "equipment",
+    "equip_slot": "weapon",
+    "desc": "[테스트] 기본 무기. 균형잡힌 성능.",
+    "effects": [
+      {
+        "stat_key": "weapon_reach",
+        "value": 48.0,
+        "mode": "set",
+        "label_kr": "사거리"
+      },
+      {
+        "stat_key": "weapon_width",
+        "value": 32.0,
+        "mode": "set",
+        "label_kr": "폭"
+      },
+      {
+        "stat_key": "weapon_damage",
+        "value": 12,
+        "mode": "set",
+        "label_kr": "데미지"
+      },
+      {
+        "stat_key": "weapon_attack_speed",
+        "value": 2.0,
+        "mode": "set",
+        "label_kr": "공격속도"
+      },
+      {
+        "stat_key": "weapon_knockback",
+        "value": 150.0,
+        "mode": "set",
+        "label_kr": "넉백"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "test_two_handed_hammer",
+    "name_kr": "양손 망치",
+    "grade": "B",
+    "item_type": "equipment",
+    "equip_slot": "weapon",
+    "desc": "[테스트] 높은 데미지와 강한 넉백, 느린 공격속도.",
+    "effects": [
+      {
+        "stat_key": "weapon_reach",
+        "value": 64.0,
+        "mode": "set",
+        "label_kr": "사거리"
+      },
+      {
+        "stat_key": "weapon_width",
+        "value": 48.0,
+        "mode": "set",
+        "label_kr": "폭"
+      },
+      {
+        "stat_key": "weapon_damage",
+        "value": 28,
+        "mode": "set",
+        "label_kr": "데미지"
+      },
+      {
+        "stat_key": "weapon_attack_speed",
+        "value": 1.0,
+        "mode": "set",
+        "label_kr": "공격속도"
+      },
+      {
+        "stat_key": "weapon_knockback",
+        "value": 300.0,
+        "mode": "set",
+        "label_kr": "넉백"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  },
+  {
+    "id": "test_sword",
+    "name_kr": "검",
+    "grade": "C",
+    "item_type": "equipment",
+    "equip_slot": "weapon",
+    "desc": "[테스트] 빠른 공격속도, 짧은 사거리, 약한 넉백.",
+    "effects": [
+      {
+        "stat_key": "weapon_reach",
+        "value": 40.0,
+        "mode": "set",
+        "label_kr": "사거리"
+      },
+      {
+        "stat_key": "weapon_width",
+        "value": 20.0,
+        "mode": "set",
+        "label_kr": "폭"
+      },
+      {
+        "stat_key": "weapon_damage",
+        "value": 7,
+        "mode": "set",
+        "label_kr": "데미지"
+      },
+      {
+        "stat_key": "weapon_attack_speed",
+        "value": 4.0,
+        "mode": "set",
+        "label_kr": "공격속도"
+      },
+      {
+        "stat_key": "weapon_knockback",
+        "value": 80.0,
+        "mode": "set",
+        "label_kr": "넉백"
+      }
+    ],
+    "sources": [
+      "KIOSK",
+      "TREASURE"
+    ]
+  }
+]

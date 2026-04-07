@@ -95,7 +95,11 @@ func _load_wall_data():
 	var file = FileAccess.open("res://data/wall_blocks.json", FileAccess.READ)
 	if file:
 		var data = JSON.parse_string(file.get_as_text())
-		wall_block_data = data["blocks"]
+		# sqlite_utils export: flat array / 기존 수기 형식: {"blocks": [...]}
+		if data is Array:
+			wall_block_data = data
+		elif data is Dictionary:
+			wall_block_data = data.get("blocks", [])
 
 func _generate_wall_blocks():
 	var rows = ceili(floor_y / BLOCK_SIZE)
@@ -136,7 +140,11 @@ func _place_block(col: int, row: int, has_treasure: bool = false, treasure_grade
 	var block = wall_block_scene.instantiate()
 	add_child(block)
 
-	var data = wall_block_data[0]
+	var data = wall_block_data[0].duplicate()
+	# 스테이지 볼록 HP 배율 적용
+	var hp_mult: float = StageManager.current_stage_data.get("brick_hp_mult", 1.0)
+	data["hp"] = int(data.get("hp", 120) * hp_mult)
+	
 	var pos = Vector2(
 		col * BLOCK_SIZE + BLOCK_SIZE / 2.0,
 		row * BLOCK_SIZE + BLOCK_SIZE / 2.0

@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://lsa5oudexgpx"]
 
 [ext_resource type="Script" uid="uid://dgmqqjdjpaf4t" path="res://scripts/entities/brick.gd" id="1_thyaw"]
+[ext_resource type="Texture2D" uid="uid://yly6ggafwdve" path="res://assets/sprites/brick_1.png" id="2_brick1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_thyaw"]
 friction = 0.8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4hun1"]
-size = Vector2(60, 60)
+size = Vector2(48, 48)
 
 [node name="Brick" type="RigidBody2D" unique_id=574680606 groups=["brick"]]
 collision_layer = 4
@@ -19,5 +20,5 @@ script = ExtResource("1_thyaw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=624160529]
 shape = SubResource("RectangleShape2D_4hun1")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=2088971126]
-color = Color(0.5318509, 0.37811282, 0.18092519, 1)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=312847201]
+texture = ExtResource("2_brick1")

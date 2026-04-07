@@ -16,14 +16,17 @@ rain-of-bricks/
 │   ├── entities/   # 씬 파일 (scripts/entities 대응)
 │   ├── game/       # 씬 파일 (scripts/game 대응)
 │   └── ui/         # 씬 파일 (scripts/ui 대응)
-├── data/           # JSON 데이터 파일
+├── data/
+│   ├── player_base.json   # 플레이어 기본 스탯 (DB → export_all.bat)
 │   ├── exp_table.json     # 레벨별 요구 경험치
-│   ├── stages.json        # 스테이지 설정 (brick_count, max_weight 등)
+│   ├── stages.json        # 스테이지 설정 (brick_hp_mult, robot_hp_mult 포함)
 │   ├── robots.json        # 로봇 적 데이터
 │   ├── stat_options.json  # 레벨업 스탯 선택지
 │   └── wall_blocks.json   # 벽 블록 설정
 ├── assets/         # 이미지, 사운드 등 리소스
-└── RainOfBricks_ItemDB.db # 아이템 데이터 SQLite DB
+├── RainOfBricks_ItemDB.db  # 아이템+플레이어+스테이지+블록+로봇 SQLite DB
+├── db_migration.sql        # DB 테이블/뷰 초기화 SQL
+└── export_all.bat          # DB → 모든 JSON 일괄 내보내기
 ```
 
 ## 핵심 시스템 구조
@@ -69,7 +72,8 @@ rain-of-bricks/
 - 노드 참조는 `get_node()` 또는 `@onready` 사용
 - GameManager/StageManager는 Autoload이므로 어디서든 직접 접근 가능
 
-## 아이템 DB
-- `RainOfBricks_ItemDB.db` — SQLite, `view_items` 뷰로 아이템 조회
-- `items.json` — DB 뷰 내보내기 결과 (`sqlite_utils rows ... --json-cols > items.json`)
-- `export_items.bat` — DB → JSON 내보내기 스크립트
+## 아이템/게임 데이터 DB
+- `RainOfBricks_ItemDB.db` — SQLite, 아이템/플레이어/스테이지/블록/로봇 통합 DB
+- `db_migration.sql` — DB 테이블/뷰 생성 스크립트 (최초 1회 실행)
+- `export_all.bat` — DB → 모든 JSON 일괄 내보내기 (밸런스 수정 후 반드시 실행)
+- JSON 파일들은 내보내기 결과물. 직접 편집 금지 (DB에서 관리)

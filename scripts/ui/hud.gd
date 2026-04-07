@@ -22,6 +22,8 @@ const SLOT_GRADE_COLOR: Dictionary = {
 }
 const MAX_ITEM_SLOTS: int = 8
 
+var _weapon_slot_panel: PanelContainer = null
+
 func _ready():
 	GameManager.weight_changed.connect(_on_weight_changed)
 	GameManager.game_over.connect(_on_game_over)
@@ -67,6 +69,7 @@ func _ready():
 	oxygen_bar.value = 100
 
 	ItemManager.item_added.connect(_on_item_added)
+	_setup_weapon_slot()
 	
 func update_hp(current: float, max_hp: float):
 	hp_bar.max_value = max_hp
@@ -134,12 +137,78 @@ func _on_currency_changed(amount: int):
 	currency_label.text = "💰 %d" % amount
 
 
+func _setup_weapon_slot() -> void:
+	var row = HBoxContainer.new()
+	row.name = "WeaponSlotRow"
+
+	var icon_lbl = Label.new()
+	icon_lbl.text = "⚔ "
+	icon_lbl.add_theme_font_size_override("font_size", 13)
+	icon_lbl.add_theme_color_override("font_color", Color(0.85, 0.85, 0.85))
+	icon_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(icon_lbl)
+
+	_weapon_slot_panel = PanelContainer.new()
+	_weapon_slot_panel.custom_minimum_size = Vector2(36, 36)
+	_weapon_slot_panel.tooltip_text = "장착된 무기 없음"
+	_apply_weapon_slot_style(Color(0.2, 0.2, 0.2), Color(0.5, 0.5, 0.5, 0.6))
+	row.add_child(_weapon_slot_panel)
+
+	var slot_lbl = Label.new()
+	slot_lbl.name = "WeaponSlotLabel"
+	slot_lbl.text = "-"
+	slot_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	slot_lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
+	slot_lbl.add_theme_font_size_override("font_size", 14)
+	slot_lbl.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+	slot_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_weapon_slot_panel.add_child(slot_lbl)
+
+	# ItemSlotsRow 앞에 삽입
+	var parent = item_slots_row.get_parent()
+	parent.add_child(row)
+	parent.move_child(row, item_slots_row.get_index())
+
+func _apply_weapon_slot_style(bg: Color, border: Color) -> void:
+	var style = StyleBoxFlat.new()
+	style.bg_color     = bg
+	style.border_color = border
+	style.border_width_left   = 2
+	style.border_width_right  = 2
+	style.border_width_top    = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left     = 4
+	style.corner_radius_top_right    = 4
+	style.corner_radius_bottom_left  = 4
+	style.corner_radius_bottom_right = 4
+	_weapon_slot_panel.add_theme_stylebox_override("panel", style)
+
 func _on_item_added(item_data: Dictionary) -> void:
 	_show_item_toast(item_data)
+	if item_data.get("item_type", "relic") == "equipment":
+		_update_weapon_slot(item_data)
+		return
 	if item_slots_row.get_child_count() >= MAX_ITEM_SLOTS:
 		return
 	var slot = _create_item_slot(item_data)
 	item_slots_row.add_child(slot)
+
+func _update_weapon_slot(item_data: Dictionary) -> void:
+	if _weapon_slot_panel == null:
+		return
+	var grade   = item_data.get("grade", "D")
+	var name_kr = item_data.get("name_kr", "?")
+	_apply_weapon_slot_style(
+		SLOT_GRADE_COLOR.get(grade, Color(0.4, 0.4, 0.4)),
+		Color(1, 1, 1, 0.5)
+	)
+	var lbl = _weapon_slot_panel.get_node_or_null("WeaponSlotLabel")
+	if lbl:
+		lbl.text = name_kr.substr(0, 1)
+		lbl.add_theme_color_override("font_color", Color(1, 1, 1))
+	_weapon_slot_panel.tooltip_text = "%s [%s]\n%s" % [
+		name_kr, grade, _slot_effect_summary(item_data)
+	]
 	
 func _show_item_toast(item_data: Dictionary) -> void:
 	var name_kr = item_data.get("name_kr", "?")
@@ -221,10 +290,13 @@ func _slot_effect_summary(item_data: Dictionary) -> String:
 		var lbl  = eff.get("label_kr", eff.get("stat_key", ""))
 		var val  = eff.get("value", 0.0)
 		var mode = eff.get("mode", "add")
-		if mode == "multiply":
-			parts.append("%s %+d%%" % [lbl, int(val * 100)])
-		else:
-			parts.append("%s %+.1f" % [lbl, val])
+		match mode:
+			"set":
+				parts.append("%s: %.0f" % [lbl, val])
+			"multiply":
+				parts.append("%s %+d%%" % [lbl, int(val * 100)])
+			_:
+				parts.append("%s %+.1f" % [lbl, val])
 	return "\n".join(parts) if not parts.is_empty() else "효과 없음"
 
 func _on_restart_button_pressed() -> void:

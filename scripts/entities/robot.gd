@@ -17,6 +17,8 @@ var exp_value: int = 20
 var is_powered: bool = true
 var is_grounded: bool = false
 var is_patrolling: bool = false
+var knockback_velocity: Vector2 = Vector2.ZERO
+const KNOCKBACK_DECEL: float = 1200.0
 var patrol_direction: int = 1
 var patrol_timer: float = 0.0
 const PATROL_CHANGE_TIME: float = 2.0
@@ -29,6 +31,7 @@ const GRAVITY: float = 980.0
 @onready var poly: Polygon2D = $Polygon2D
 
 func _ready():
+	add_to_group("robot")
 	_setup_visuals()
 	_start_power()
 	power_timer.timeout.connect(_on_power_timeout)
@@ -98,6 +101,10 @@ func _physics_process(delta: float):
 
 	_apply_gravity(delta)
 	_handle_ai(delta)
+	if knockback_velocity != Vector2.ZERO:
+		velocity.x = knockback_velocity.x
+		velocity.y += knockback_velocity.y
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_DECEL * delta)
 	move_and_slide()
 	_check_grounded()
 
@@ -197,9 +204,12 @@ func _on_damage_tick():
 		if p.has_method("take_damage"):
 			p.take_damage(damage)
 
-func take_damage(amount: int):
+func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO, knockback_force: float = 0.0):
 	hp -= amount
-	
+
+	if knockback_dir != Vector2.ZERO and knockback_force > 0.0:
+		knockback_velocity = knockback_dir * knockback_force
+
 	# 데미지 텍스트 생성
 	var dmg_script = preload("res://scripts/ui/damage_text.gd")
 	var dmg_node = Node2D.new()
@@ -209,7 +219,7 @@ func take_damage(amount: int):
 	dmg_node.global_position = global_position + Vector2(0, -30)
 	var scene = get_tree().current_scene
 	if scene: scene.add_child(dmg_node)
-	
+
 	if hp <= 0:
 		_destroy()
 

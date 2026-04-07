@@ -215,25 +215,141 @@ func _calc_price(item: Dictionary) -> int:
 	var mult = ItemManager.get_player_stat("kiosk_price_mult", 1.0)
 	return max(1, int(base * mult))
 
-# ── 구매 처리 ─────────────────────────────────────
+# ── 구매 처리 (팝업 표시) ────────────────────────────
 func _on_buy_pressed(item: Dictionary, price: int, card: Control) -> void:
 	if GameManager.currency < price:
 		return
-	GameManager.currency -= price
-	GameManager.currency_changed.emit(GameManager.currency)
+	_show_acquire_popup(item, price, card)
 
-	# ItemManager가 효과 적용 + owned_items 추가 + item_added 시그널 발신
-	ItemManager.add_item(item)
+func _show_acquire_popup(item: Dictionary, price: int, card: Control) -> void:
+	# ── 배경 딤(dim) ──────────────────────────────────
+	var dim = ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.55)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(dim)
 
-	# 카드 제거 및 목록 갱신
-	_shop_items.erase(item)
-	card.queue_free()
-	_refresh_currency_label(GameManager.currency)
-	_refresh_buy_buttons()
-	
-	# 즉시 스탯창을 갱신 (상시 반영)
-	if status_panel_instance and status_panel_instance.is_open:
-		status_panel_instance._refresh_stats()
+	# ── 팝업 패널 ─────────────────────────────────────
+	var popup = PanelContainer.new()
+	popup.custom_minimum_size = Vector2(320, 0)
+	var ps = StyleBoxFlat.new()
+	var grade = item.get("grade", "D")
+	ps.bg_color = GRADE_COLOR.get(grade, Color(0.25, 0.25, 0.25)).darkened(0.25)
+	ps.border_width_left   = 2
+	ps.border_width_right  = 2
+	ps.border_width_top    = 2
+	ps.border_width_bottom = 2
+	ps.border_color = GRADE_COLOR.get(grade, Color(0.5, 0.5, 0.5))
+	ps.corner_radius_top_left     = 10
+	ps.corner_radius_top_right    = 10
+	ps.corner_radius_bottom_left  = 10
+	ps.corner_radius_bottom_right = 10
+	popup.add_theme_stylebox_override("panel", ps)
+	# 화면 중앙
+	popup.set_anchors_preset(Control.PRESET_CENTER)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 10)
+	popup.add_child(vbox)
+
+	# 등급
+	var glbl = Label.new()
+	glbl.text = "[ %s 등급 ]" % grade
+	glbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	glbl.add_theme_font_size_override("font_size", 13)
+	glbl.add_theme_color_override("font_color", Color(1, 1, 1, 0.75))
+	vbox.add_child(glbl)
+
+	# 아이템 이름
+	var nlbl = Label.new()
+	nlbl.text = item.get("name_kr", "???")
+	nlbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nlbl.add_theme_font_size_override("font_size", 22)
+	nlbl.add_theme_color_override("font_color", Color(1, 1, 1))
+	nlbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(nlbl)
+
+	# 구분선
+	var sep = HSeparator.new()
+	vbox.add_child(sep)
+
+	# 효과 텍스트
+	var eff_text = _build_effect_text(item)
+	var elbl = Label.new()
+	elbl.text = eff_text
+	elbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	elbl.add_theme_font_size_override("font_size", 14)
+	elbl.add_theme_color_override("font_color", Color(0.88, 1.0, 0.82))
+	elbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(elbl)
+
+	# 가격
+	var plbl = Label.new()
+	plbl.text = "💰 %d" % price
+	plbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	plbl.add_theme_font_size_override("font_size", 16)
+	plbl.add_theme_color_override("font_color", Color(1, 0.92, 0.4))
+	vbox.add_child(plbl)
+
+	# 버튼 행
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 12)
+	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(hbox)
+
+	# 획득 버튼
+	var buy_btn = Button.new()
+	buy_btn.text = "획득"
+	buy_btn.custom_minimum_size = Vector2(110, 36)
+	buy_btn.add_theme_font_size_override("font_size", 16)
+	var buy_sb = StyleBoxFlat.new()
+	buy_sb.bg_color = Color(0.1, 0.55, 0.18)
+	buy_sb.corner_radius_top_left     = 5
+	buy_sb.corner_radius_top_right    = 5
+	buy_sb.corner_radius_bottom_left  = 5
+	buy_sb.corner_radius_bottom_right = 5
+	buy_btn.add_theme_stylebox_override("normal", buy_sb)
+	hbox.add_child(buy_btn)
+
+	# 버리기 버튼
+	var discard_btn = Button.new()
+	discard_btn.text = "버리기"
+	discard_btn.custom_minimum_size = Vector2(110, 36)
+	discard_btn.add_theme_font_size_override("font_size", 16)
+	var dis_sb = StyleBoxFlat.new()
+	dis_sb.bg_color = Color(0.55, 0.12, 0.12)
+	dis_sb.corner_radius_top_left     = 5
+	dis_sb.corner_radius_top_right    = 5
+	dis_sb.corner_radius_bottom_left  = 5
+	dis_sb.corner_radius_bottom_right = 5
+	discard_btn.add_theme_stylebox_override("normal", dis_sb)
+	hbox.add_child(discard_btn)
+
+	add_child(popup)
+
+	# ── 버튼 콜백 ─────────────────────────────────────
+	var captured_item  = item
+	var captured_price = price
+	var captured_card  = card
+
+	buy_btn.pressed.connect(func():
+		dim.queue_free()
+		popup.queue_free()
+		# 실제 구매 처리
+		GameManager.currency -= captured_price
+		GameManager.currency_changed.emit(GameManager.currency)
+		ItemManager.add_item(captured_item)
+		_shop_items.erase(captured_item)
+		captured_card.queue_free()
+		_refresh_currency_label(GameManager.currency)
+		_refresh_buy_buttons()
+		if status_panel_instance and status_panel_instance.is_open:
+			status_panel_instance._refresh_stats()
+	)
+
+	discard_btn.pressed.connect(func():
+		dim.queue_free()
+		popup.queue_free()
+	)
 
 # ── UI 갱신 헬퍼 ──────────────────────────────────
 func _refresh_currency_label(_amount: int = -1) -> void:
